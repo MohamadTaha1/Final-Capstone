@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import CartItem from "./CartItem";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-
-const Checkout = () => {
+const CartCheckout = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     // Load cart items from local storage
-    const loadedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const loadedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
     setCartItems(loadedCartItems);
   }, []);
 
@@ -20,52 +19,50 @@ const Checkout = () => {
   };
 
   const handleConfirmOrder = async () => {
-    const token = localStorage.getItem('token');
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    
+    const token = localStorage.getItem("token");
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
     // Assuming all cart items belong to the same restaurant
     const restaurantId = cartItems[0]?.restaurant_id;
     console.log(restaurantId);
-  
+
     const orderData = {
       restaurant_id: restaurantId, // Make sure this key matches the backend expectation
-      cartItems: cartItems.map(item => ({
+      cartItems: cartItems.map((item) => ({
         id: item.id,
         quantity: item.quantity,
-        price: item.price
+        price: item.price,
       })),
       notes: "Any additional notes here",
     };
-    
-  
+
     try {
-      const response = await fetch('http://localhost:8000/api/place-order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify(orderData),
-        });
-  
+      const response = await fetch("http://localhost:8000/api/place-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(orderData),
+      });
+
       const responseData = await response.json();
       if (response.ok) {
-        console.log('Order placed successfully', responseData);
-                
+        console.log("Order placed successfully", responseData);
+
         // Clear cart from local storage
-        localStorage.removeItem('cart');
+        localStorage.removeItem("cart");
 
         // Navigate to the orders page
-        navigate('/orders');
+        navigate("/orders");
         // Handle success (e.g., navigate to an order confirmation page)
       } else {
-        console.error('Failed to place order', responseData);
+        console.error("Failed to place order", responseData);
       }
     } catch (error) {
-      console.error('Error placing order', error);
+      console.error("Error placing order", error);
     }
   };
-  
 
   return (
     <div className="flex min-h-screen bg-neutral-100">
@@ -84,7 +81,10 @@ const Checkout = () => {
             <h2 className="text-xl font-bold text-secondary">
               Subtotal: ${calculateSubtotal()}
             </h2>
-            <button className="bg-primary text-white py-2 px-4 mt-4 rounded hover:bg-opacity-90" onClick={handleConfirmOrder}>
+            <button
+              className="bg-primary text-white py-2 px-4 mt-4 rounded hover:bg-opacity-90"
+              onClick={handleConfirmOrder}
+            >
               Confirm Order
             </button>
           </div>
@@ -94,4 +94,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default CartCheckout;

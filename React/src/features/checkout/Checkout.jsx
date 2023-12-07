@@ -1,15 +1,15 @@
+import CartCheckout from "../../components/cart/CartCheckout";
 import Footer from "../../components/reusables/Footer";
 import Navbar from "../../components/reusables/Navbar";
-import OrderDetails from "../../components/delivery/OrderDetails";
 
-const OrderPage = () => {
+const Checkout = () => {
   return (
     <>
       <Navbar />
-      <OrderDetails />
+      <CartCheckout />
       <Footer />
     </>
   );
 };
 
-export default OrderPage;
+export default Checkout;
