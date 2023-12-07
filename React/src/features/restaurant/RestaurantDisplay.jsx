@@ -1,7 +1,7 @@
 import Footer from "../../components/reusables/Footer";
 import Navbar from "../../components/reusables/Navbar";
 import NavbarLoggedOut from "../../components/reusables/NavbarLoggedOut";
-import RestaurantDetails from "../../components/RestaurantDetails";
+import RestaurantDetails from "../../components/restaurant/RestaurantDetails";
 import { useState, useEffect } from "react";
 
 

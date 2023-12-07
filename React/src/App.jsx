@@ -6,13 +6,13 @@ import Landing from "./features/Landing/Landing";
 import ProfilePage from "./features/User/ProfilePage";
 import Checkout from "./components/checkout/Checkout";
 import Main from "./features/adminChef/Main";
-import RestaurantDetail from "./components/auth/RestaurantDetail";
-import EditRestaurant from "./components/auth/EditRestaurant";
+import RestaurantDetail from "./components/restaurant/RestaurantDetail";
+import EditRestaurant from "./components/restaurant/EditRestaurant";
 import { ProtectedRoute } from "./components/auth/UseAuth";
 import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/User/OrdersPage";
 import Delivery from "./features/delivery/DeliveryOrders";
-
+import BrowsePage from "./features/browse/BrowsePage";
 
 function App() {
   return (
@@ -23,51 +23,78 @@ function App() {
         <Route path="/login" element={<LogIn />} />
 
         {/* Protected routes for customers */}
-        <Route path="/profile" element={
-          <ProtectedRoute role="Customer">
-            <ProfilePage />
-          </ProtectedRoute>
-        } />
-        <Route path="/checkout" element={
-          <ProtectedRoute role="Customer">
-            <Checkout />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute role="Customer">
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/browse"
+          element={
+            <ProtectedRoute role="Customer">
+              <BrowsePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <ProtectedRoute role="Customer">
+              <Checkout />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/orders" element={
-          <ProtectedRoute role="Customer">
-            <OrderPage />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute role="Customer">
+              <OrderPage />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Protected routes for owners */}
-        <Route path="/main" element={
-          <ProtectedRoute role="Owner">
-            <Main />
-          </ProtectedRoute>
-        } />
-        <Route path="/edit-restaurant/:id" element={
-          <ProtectedRoute role="Owner">
-            <EditRestaurant />
-          </ProtectedRoute>
-        } />
-        <Route path="/restaurant-details/:id" element={
-          <ProtectedRoute role="Owner">
-            <RestaurantDetail />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/main"
+          element={
+            <ProtectedRoute role="Owner">
+              <Main />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-restaurant/:id"
+          element={
+            <ProtectedRoute role="Owner">
+              <EditRestaurant />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/restaurant-details/:id"
+          element={
+            <ProtectedRoute role="Owner">
+              <RestaurantDetail />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/restaurant/:id" element={ 
-          <ProtectedRoute role="Customer">
-            <RestaurantDisplay />
-          </ProtectedRoute>} />
+        <Route
+          path="/restaurant/:id"
+          element={
+            <ProtectedRoute role="Customer">
+              <RestaurantDisplay />
+            </ProtectedRoute>
+          }
+        />
         {/* Add other routes as needed */}
 
         <Route path="/delivery" element={<Delivery />} />
       </Routes>
-
-      
-
     </BrowserRouter>
   );
 }

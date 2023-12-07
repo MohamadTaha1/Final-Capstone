@@ -2,8 +2,6 @@ import { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-
-
 const NavbarLoggedOut = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -12,7 +10,6 @@ const NavbarLoggedOut = () => {
   const handleLogin = () => {
     navigate("/login"); // Redirect to login page after logout
   };
-
 
   return (
     <nav className="bg-white fixed w-full z-10 top-0 shadow-md">
@@ -23,7 +20,7 @@ const NavbarLoggedOut = () => {
               Maida
             </span>
           </a>
-          {/* Burger icon for mobile */}
+          {/* Burger icon foSr mobile */}
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? (
@@ -42,13 +39,7 @@ const NavbarLoggedOut = () => {
             {/* Navigation Links */}
             <div className="px-8 py-2 md:flex md:space-x-4">
               <a
-                href="/"
-                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 group transition duration-300"
-              >
-                Home
-              </a>
-              <a
-                href="#"
+                href="/browse"
                 className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
               >
                 Browse
@@ -65,15 +56,18 @@ const NavbarLoggedOut = () => {
               >
                 Profile
               </a>
-              <a href="/checkout" className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent">
+              <a
+                href="/checkout"
+                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
+              >
                 Cart
               </a>
               <button
-          onClick={handleLogin}
-          className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-        >
-          Login
-        </button>
+                onClick={handleLogin}
+                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
+              >
+                Login
+              </button>
             </div>
           </div>
         </div>

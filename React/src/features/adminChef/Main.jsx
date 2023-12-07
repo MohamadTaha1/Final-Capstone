@@ -1,6 +1,6 @@
 import Main from "../../components/auth/AdminPanel";
-import RestaurantDetail from "../../components/auth/RestaurantDetail";
-import Orders from "../../components/auth/Orders";
+import RestaurantDetail from "../../components/restaurant/RestaurantDetail";
+import Orders from "../../components/delivery/Orders";
 
 const Admin = () => {
   return (
@@ -8,7 +8,6 @@ const Admin = () => {
       <Main />
       <RestaurantDetail />
       <Orders />
-
     </>
   );
 };

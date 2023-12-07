@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -13,7 +12,6 @@ const Navbar = () => {
     localStorage.removeItem("role");
     navigate("/login"); // Redirect to login page after logout
   };
-
 
   return (
     <nav className="bg-white fixed w-full z-10 top-0 shadow-md">
@@ -43,13 +41,7 @@ const Navbar = () => {
             {/* Navigation Links */}
             <div className="px-8 py-2 md:flex md:space-x-4">
               <a
-                href="/"
-                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 group transition duration-300"
-              >
-                Home
-              </a>
-              <a
-                href="#"
+                href="/browse"
                 className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
               >
                 Browse
@@ -66,15 +58,18 @@ const Navbar = () => {
               >
                 Profile
               </a>
-              <a href="/checkout" className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent">
+              <a
+                href="/checkout"
+                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
+              >
                 Cart
               </a>
               <button
-          onClick={handleLogout}
-          className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-        >
-          Logout
-        </button>
+                onClick={handleLogout}
+                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>

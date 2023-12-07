@@ -1,7 +1,7 @@
 import Footer from "../../components/reusables/Footer";
 import Navbar from "../../components/reusables/Navbar";
 import NavbarLoggedOut from "../../components/reusables/NavbarLoggedOut";
-import RestaurantGrid from "../../components/RestaurantGrid";
+import RestaurantGrid from "../../components/restaurant/RestaurantGrid";
 import { useState, useEffect } from "react";
 
 const Landing = () => {
