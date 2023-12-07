@@ -20,6 +20,10 @@ const RestaurantGrid = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <div className="self-center whitespace-nowrap text-gray-500 group transition duration-300 inline-block">
+        Restaurants
+        <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-primary"></span>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {restaurants.map((restaurant) => (
           <div

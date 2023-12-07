@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const Header = () => {
   const carouselTexts = [
     "Welcome to Our Service",
-    "Explore Home Restaurants",
+    "Explore Our Restaurants",
     "Enjoy Delicious Meals",
     // Add more text items as needed
   ];
@@ -21,7 +21,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="bg-primary flex justify-center items-center h-96">
+    <div className="bg-primary flex justify-center items-center h-fit p-40">
       <h1 className="text-bgc font-edu-tas text-3xl md:text-5xl lg:text-7xl">
         {carouselTexts[currentIndex]}
       </h1>
