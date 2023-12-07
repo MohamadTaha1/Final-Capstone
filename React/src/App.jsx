@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./features/auth/LogIn";
 import SignUp from "./features/auth/SignUp";
-import Landing from "./features/Landing/Landing";
 import ProfilePage from "./features/User/ProfilePage";
 import Checkout from "./components/checkout/Checkout";
 import Main from "./features/adminChef/Main";
@@ -12,13 +11,13 @@ import { ProtectedRoute } from "./components/auth/UseAuth";
 import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/User/OrdersPage";
 import Delivery from "./features/delivery/DeliveryOrders";
-import BrowsePage from "./features/browse/BrowsePage";
+import LandingPage from "./features/Landing/LandingPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
 
@@ -32,10 +31,10 @@ function App() {
           }
         />
         <Route
-          path="/browse"
+          path="/"
           element={
             <ProtectedRoute role="Customer">
-              <BrowsePage />
+              <LandingPage />
             </ProtectedRoute>
           }
         />

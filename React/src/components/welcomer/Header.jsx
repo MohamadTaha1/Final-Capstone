@@ -21,10 +21,18 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="bg-primary flex justify-center items-center h-fit p-40">
-      <h1 className="text-bgc font-edu-tas text-3xl md:text-5xl lg:text-7xl">
+    <div className="bg-bgc pt-36 flex flex-col justify-center items-center h-fit p-32">
+      <span className="text-primary font-edu-tas text-3xl md:text-5xl lg:text-6xl">
         {carouselTexts[currentIndex]}
-      </h1>
+      </span>
+      <div className="mt-4">
+        <span className="text-primary font-edu-tas text-lg md:text-xl lg:text-2xl">
+          your stop to a fast, fresh, homemade Maida{" "}
+          <span aria-label="heart" role="img">
+            ❤️
+          </span>
+        </span>
+      </div>
     </div>
   );
 };
