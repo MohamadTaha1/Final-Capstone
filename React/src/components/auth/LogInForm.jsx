@@ -6,10 +6,12 @@ const LogInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //  const [username, setUsername] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessage(null);
 
     // API call logic
     const response = await fetch(`http://localhost:8000/api/login`, {
@@ -37,6 +39,8 @@ const LogInForm = () => {
         navigate("/"); // Redirect to landing page for customers
       }
     } else {
+      setErrorMessage("Invalid username and/or password");
+
       // Handle errors here
       console.error("Login failed:", response.statusText);
     }
@@ -50,10 +54,16 @@ const LogInForm = () => {
             Log In
           </h2>
           <form onSubmit={handleSubmit}>
+            {errorMessage && (
+              <div className="mb-4 text-center">
+                <span className="text-sm text-red-500">{errorMessage}</span>
+              </div>
+            )}
+
             <div className="mb-4">
               <input
                 id="email"
-                type="email" // Change type to email
+                type="email"
                 name="email"
                 className="w-full p-2 font-inter border border-gray-200 rounded-md focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-300"
                 placeholder="Email"
@@ -75,6 +85,7 @@ const LogInForm = () => {
                 required
               />
             </div>
+
             <div className="mb-4">
               <PrimaryButton>Log In</PrimaryButton>
             </div>

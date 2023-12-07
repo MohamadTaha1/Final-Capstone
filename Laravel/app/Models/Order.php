@@ -15,7 +15,9 @@ class Order extends Model
         'restaurant_id',
         'total_price',
         'status',
-        'notes'
+        'notes',
+        'delivery_user_id'  
+
     ];
 
     // Define the relationship with User
@@ -23,7 +25,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function deliveryUser()
     {
         return $this->belongsTo(User::class, 'delivery_user_id');

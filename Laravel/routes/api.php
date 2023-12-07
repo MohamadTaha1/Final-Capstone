@@ -86,10 +86,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/orders', [UserOrderController::class, 'getUserOrders']);
 });
 
-
-Route::middleware(['auth:sanctum', 'role:delivery'])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/available-for-delivery', [OrderController::class, 'availableForDelivery']);
     Route::post('/orders/take-for-delivery/{orderId}', [OrderController::class, 'takeOrderForDelivery']);
 });
-
 
