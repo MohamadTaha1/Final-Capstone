@@ -22,10 +22,10 @@ const Header = () => {
 
   return (
     <div className="bg-bgc pt-36 flex flex-col justify-center items-center h-fit p-32">
-      <span className="text-primary font-edu-tas text-3xl md:text-5xl lg:text-6xl">
+      <span className="text-primary font-edu-tas text-4xl md:text-6xl lg:text-7xl">
         {carouselTexts[currentIndex]}
       </span>
-      <div className="mt-4">
+      <div className="mt-4 pt-6">
         <span className="text-primary font-edu-tas text-lg md:text-xl lg:text-2xl">
           your stop to a fast, fresh, homemade Maida{" "}
           <span aria-label="heart" role="img">

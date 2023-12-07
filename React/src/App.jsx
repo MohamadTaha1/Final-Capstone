@@ -12,6 +12,7 @@ import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/User/OrdersPage";
 import Delivery from "./features/delivery/DeliveryOrders";
 import LandingPage from "./features/Landing/LandingPage";
+import PlansPage from "./features/plans/PlansPage";
 
 function App() {
   return (
@@ -46,7 +47,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/plans"
+          element={
+            <ProtectedRoute role="Customer">
+              <PlansPage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/orders"
           element={
