@@ -1,81 +1,169 @@
-import { useState, useEffect } from 'react';
+    import { useState, useEffect } from 'react';
 
-const DeliveryOrders = () => {
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const DeliveryOrders = () => {
+        const [currentOrder, setCurrentOrder] = useState(null);
+        const [pastOrders, setPastOrders] = useState([]);
+        const [isAvailable, setIsAvailable] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.error('No token found');
-            setError(new Error('Authentication token not found'));
-            setLoading(false);
-            return;
-        }
+        useEffect(() => {
+            fetchAssignedOrder();
+            fetchPastDeliveredOrders();
+            fetchAvailabilityStatus()
+        }, []);
 
-        fetch('http://localhost:8000/api/orders/available-for-delivery', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+        const fetchAvailabilityStatus = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/delivery/availability', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch availability status');
+                }
+        
+                const { is_available } = await response.json();
+                setIsAvailable(is_available);
+            } catch (error) {
+                console.error('Error fetching availability status:', error);
             }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+        };
+
+        const fetchAssignedOrder = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/delivery/current-order', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch the assigned order');
+                }
+        
+                const order = await response.json();
+                console.log(order); // This will show you what you're actually receiving
+                setCurrentOrder(order);
+            } catch (error) {
+                console.error('Error fetching assigned order:', error);
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Fetched orders for delivery:", data);
-            setOrders(data);
-            setLoading(false);
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            setError(error);
-            setLoading(false);
-        });
-    }, []);
+        };
+        
+        
+        
 
-    const takeOrder = (orderId) => {
-        // Implement the logic to take the order
-        console.log(`Taking order with ID: ${orderId}`);
-        // API call to take the order for delivery...
-    }
+        const fetchPastDeliveredOrders = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/delivery/past-orders', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to fetch past delivered orders');
+                }
+        
+                const pastOrders = await response.json();
+                setPastOrders(pastOrders);
+            } catch (error) {
+                console.error('Error fetching past delivered orders:', error);
+            }
+        };
+        
+        const toggleAvailability = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/delivery/toggle-availability', {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+                const data = await response.json();
+                setIsAvailable(data.is_available);
+            } catch (error) {
+                console.error('Error toggling availability:', error);
+            }
+        };
 
-    return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold text-center mb-6">Available Orders for Delivery</h1>
-            {orders.length > 0 ? (
-                orders.map(order => (
-                    <div key={order.id} className="bg-white p-6 rounded-lg shadow-md mb-4">
-                        <h2 className="text-2xl font-bold mb-3">Order ID: {order.id}</h2>
-                        <p className="text-gray-600 mb-2">Total Price: ${order.total_price}</p>
-                        <p className="text-gray-600 mb-2">Status: {order.status}</p>
-                        {order.restaurant && <p className="text-gray-600 mb-4">Restaurant: {order.restaurant.name}</p>}
-                        {/* Add a button to take the order */}
-                        <button 
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => takeOrder(order.id)}
-                        >
-                            Take Order
-                        </button>
+        const markOrderAsDelivered = async (id) => {
+            try {
+                console.log(id); 
+                const response = await fetch(`http://localhost:8000/api/delivery/mark-delivered/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to mark order as delivered');
+                }
+        
+                // Refresh data or handle success
+            } catch (error) {
+                console.error('Error marking order as delivered:', error);
+            }
+        };
+        
+        return (
+            <div className="bg-gray-100 min-h-screen p-8">
+                <div className="container mx-auto">
+                    <button
+                        onClick={toggleAvailability}
+                        className={`px-4 py-2 rounded-md text-white font-semibold tracking-wide ${
+                            isAvailable ? 'bg-red-500' : 'bg-green-500'
+                        }`}
+                    >
+                        {isAvailable ? 'Mark as Unavailable' : 'Mark as Available'}
+                    </button>
+    
+                    <div className="mt-8">
+                        <h1 className="text-xl font-bold text-gray-700 mb-4">Current Order</h1>
+                        {currentOrder && currentOrder.id ? (
+                            <div className="bg-white p-6 rounded-lg shadow-lg">
+                                <p className="text-gray-800 text-lg">Order ID: {currentOrder.id}</p>
+                                <p className="text-gray-600">Total Price: ${currentOrder.total_price}</p>
+                                <button
+                                    onClick={() => markOrderAsDelivered(currentOrder.id)}
+                                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                                >
+                                    Mark as Delivered
+                                </button>
+                            </div>
+                        ) : (
+                            <p className="text-gray-600">Nothing available to Deliver at the moment.</p>
+                        )}
                     </div>
-                ))
-            ) : (
-                <p className="text-center text-gray-700 text-xl">No orders available for delivery.</p>
-            )}
-        </div>
-    );
-};
+    
+                    <div className="mt-8">
+                        <h2 className="text-xl font-bold text-gray-700 mb-4">Past Delivered Orders</h2>
+                        <div className="space-y-4">
+                            {pastOrders.length > 0 ? (
+                                pastOrders.map(order => (
+                                    <div key={order.id} className="bg-white p-4 rounded-lg shadow-md">
+                                        <p className="text-gray-800">Order ID: {order.id}</p>
+                                        <p className="text-gray-600">Total Price: ${order.total_price}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-gray-600">No past delivered orders.</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+        
+    }
+        
 
-export default DeliveryOrders;
+    export default DeliveryOrders;

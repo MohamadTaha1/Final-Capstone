@@ -10,6 +10,7 @@ use App\Http\Controllers\UserOrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\DeliveryController;
 
 
 
@@ -38,6 +39,20 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::middleware('auth:sanctum', 'isDelivery')->group(function () {
+    Route::get('/delivery/current-order', [DeliveryController::class, 'getCurrentAssignedOrder']);
+    Route::patch('/delivery/mark-delivered/{id}', [DeliveryController::class, 'markOrderAsDelivered']);
+    Route::get('/delivery/past-orders', [DeliveryController::class, 'getPastDeliveredOrders']);
+    Route::get('/delivery/availability', [DeliveryController::class, 'getAvailability']);
+
+});
+
+
+Route::patch('/delivery/toggle-availability', [DeliveryController::class, 'toggleAvailability'])->middleware(['auth:sanctum', 'isDelivery']);
+
+
 
 // Restaurant Routes
 Route::get('/restaurants/search', [RestaurantController::class, 'search']);
@@ -86,8 +101,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/orders', [UserOrderController::class, 'getUserOrders']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/orders/available-for-delivery', [OrderController::class, 'availableForDelivery']);
-    Route::post('/orders/take-for-delivery/{orderId}', [OrderController::class, 'takeOrderForDelivery']);
-});
 

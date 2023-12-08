@@ -67,11 +67,12 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'chef' => \App\Http\Middleware\EnsureUserIsChef::class,
-        'delivery' => \App\Http\Middleware\EnsureUserIsDeliveryPersonnel::class,
     ];
 
     protected $routeMiddleware = [
         // ... other middleware ...
         'isOwner' => \App\Http\Middleware\EnsureIsOwner::class,
+        'isDelivery' => \App\Http\Middleware\EnsureIsDelivery::class,
+
     ];
 }

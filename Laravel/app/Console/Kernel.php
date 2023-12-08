@@ -13,6 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+
+        // Schedule your custom command
+        $schedule->command('app:assign-delivery-orders')->everyMinute();
     }
 
     /**

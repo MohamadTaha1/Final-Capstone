@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -110,30 +111,40 @@ class OrderController extends Controller
 
     public function availableForDelivery()
     {
-        if (Auth::user()->role !== 'delivery') {
+        \Log::info('User Role: ' . Auth::user()->role);
+
+        if (Auth::user()->role !== 'Delivery') {
+            \Log::error('Unauthorized access by user: ' . Auth::id());
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         $orders = Order::whereNull('delivery_user_id')->with(['orderDetails.dish'])->get();
-        return response()->json($orders);
-    }
-    public function takeOrderForDelivery($orderId)
-    {
-        if (Auth::user()->role !== 'delivery') {
-            return response()->json(['message' => 'Unauthorized'], 403);
+
+        \Log::info('Orders found: ' . $orders->count());
+
+        if ($orders->isEmpty()) {
+            \Log::info('No orders available for delivery');
+            return response()->json(['message' => 'Order not found'], 404);
         }
 
+        return response()->json($orders);
+    }
+
+
+
+    public function takeOrderForDelivery(Request $request, $orderId)
+    {
         $order = Order::findOrFail($orderId);
 
         if ($order->delivery_user_id) {
-            return response()->json(['message' => 'Order already taken'], 400);
+            return response()->json(['message' => 'Order is already taken'], 422);
         }
 
-        $order->delivery_user_id = Auth::id();
+        $order->delivery_user_id = auth()->id();
         $order->save();
 
-        return response()->json(['message' => 'Order taken successfully', 'order' => $order]);
+        return response()->json(['message' => 'You have successfully taken the order.', 'order' => $order]);
     }
-    
+
 }
 

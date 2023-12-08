@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Main = () => {
+
+    
     const [restaurants, setRestaurants] = useState([]);
 
     const navigate = useNavigate();
