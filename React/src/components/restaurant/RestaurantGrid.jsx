@@ -40,7 +40,7 @@ const RestaurantGrid = () => {
               <p className="text-gray-600">{restaurant.description}</p>
               <button
                 onClick={() => handleViewClick(restaurant.id)}
-                className="mt-3 bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded"
+                className="mt-3 bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
               >
                 View
               </button>

@@ -77,12 +77,12 @@ const CartCheckout = () => {
               <CartItem key={item.id} item={item} />
             ))}
           </div>
-          <div className="mt-6">
+          <div className="mt-6 text-center">
             <h2 className="text-xl font-bold text-secondary">
               Subtotal: ${calculateSubtotal()}
             </h2>
             <button
-              className="bg-primary text-white py-2 px-4 mt-4 rounded hover:bg-opacity-90"
+              className="bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 m-3 rounded transition duration-300 ease-in-out"
               onClick={handleConfirmOrder}
             >
               Confirm Order
