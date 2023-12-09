@@ -98,7 +98,7 @@ const RestaurantDetail = () => {
 
     return (
         <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold">Menu: {menu.title}</h2>
+        <h2 className="text-2xl font-bold text-text">Menu: {menu.title}</h2>
         <p className="text-gray-600 mb-4">{menu.description}</p>
     
         <div className="dishes-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">

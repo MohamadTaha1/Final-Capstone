@@ -85,19 +85,31 @@ const RestaurantDetails = () => {
           alt={restaurant.name}
           className="w-full h-64 object-cover rounded-lg shadow-lg" // Added rounded-lg and shadow-lg for better image presentation
         />
-        <h1 className="text-5xl font-bold text-center my-4 text-gray-800">
+        <h1 className="text-5xl font-inter text-center my-4 text-text">
           {" "}
           {restaurant.name}
         </h1>
       </div>
-      <p className="text-xl text-center my-2 text-gray-600">
+      <p className="text-xl text-center my-2 text-text">
         {" "}
         {restaurant.description}
       </p>
-
+      <p className="text-xl text-center font-inter font-semibold my-2 text-text">
+        {" Restaurant ID: "}
+        {restaurant.id}
+      </p>
+      <div className="mt-6 text-center">
+        {" "}
+        <a
+          href="/plans"
+          className="bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out" // Enhanced button style with transition for hover effect
+        >
+          Subscribe
+        </a>
+      </div>
       {/* Menu Section */}
       <div className="mt-6">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-4"> Menu</h2>
+        <h2 className="text-3xl font-inter text-text mb-4"> Menu</h2>
         {restaurant.menus.map((menu) =>
           menu.dishes.map((dish) => (
             <div
@@ -108,15 +120,15 @@ const RestaurantDetails = () => {
                 <img
                   src={dish.image}
                   alt={dish.name}
-                  className="h-44 w-44 rounded-4 mr-6" 
+                  className="h-44 w-44 rounded-4 mr-6"
                 />
                 <div className="flex flex-col justify-between">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                  <h3 className="text-lg font-semibold text-text mb-1">
                     {" "}
                     {dish.name}
                   </h3>
-                  <p className="text-gray-600 mb-1"> {dish.description}</p>
-                  <p className="text-gray-700 font-semibold">
+                  <p className="text-text mb-1"> {dish.description}</p>
+                  <p className="text-text2 font-semibold">
                     {" "}
                     Price: ${dish.price}
                   </p>
@@ -125,7 +137,7 @@ const RestaurantDetails = () => {
               <div className="quantity-selector flex items-center">
                 <button
                   onClick={() => handleQuantityChange(dish.id, -1)}
-                  className="bg-gray-200 text-gray-600 hover:bg-gray-300 p-2 rounded-l-md"
+                  className="bg-gray-200 text-text hover:bg-gray-300 p-2 rounded-l-md"
                 >
                   -
                 </button>
@@ -137,7 +149,7 @@ const RestaurantDetails = () => {
                 />
                 <button
                   onClick={() => handleQuantityChange(dish.id, 1)}
-                  className="bg-gray-200 text-gray-600 hover:bg-gray-300 p-2 rounded-r-md"
+                  className="bg-gray-200 text-text hover:bg-gray-300 p-2 rounded-r-md"
                 >
                   +
                 </button>
@@ -148,12 +160,12 @@ const RestaurantDetails = () => {
       </div>
       <div className="mt-6 text-center">
         {" "}
-        <button
-          onClick={goToCart}
-          className="bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out" // Enhanced button style with transition for hover effect
+        <a
+          href="/checkout"
+          className="bg-primary hover:cursor-pointer hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out" // Enhanced button style with transition for hover effect
         >
           Check Cart
-        </button>
+        </a>
       </div>
     </div>
   );
