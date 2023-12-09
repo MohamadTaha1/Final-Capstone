@@ -47,14 +47,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/plans"
-          element={
-            <ProtectedRoute role="Customer">
-              <PlansPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/plans" element={<PlansPage />} />
         <Route
           path="/orders"
           element={

@@ -86,7 +86,7 @@ const LogInForm = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 text-center">
               <PrimaryButton>Log In</PrimaryButton>
             </div>
           </form>

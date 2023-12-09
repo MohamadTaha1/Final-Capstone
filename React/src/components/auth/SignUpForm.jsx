@@ -95,7 +95,7 @@ const SignUpForm = () => {
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="text-center mb-4">
               <PrimaryButton>Sign Up</PrimaryButton>
             </div>
           </form>
