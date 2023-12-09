@@ -12,6 +12,8 @@ export default {
         primary: "#F94700",
         secondary: "#030057",
         bgc: "#e7e7e7",
+        text: "#545454",
+        text2: "#2c2c2c",
       },
     },
   },
