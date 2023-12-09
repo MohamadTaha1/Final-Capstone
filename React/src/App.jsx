@@ -14,6 +14,7 @@ import Delivery from "./features/delivery/DeliveryOrders";
 import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
+import ApplyPage from "./features/User/ApplyPage";
 
 function App() {
   return (
@@ -55,6 +56,14 @@ function App() {
           element={
             <ProtectedRoute role="Customer">
               <OrderPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/apply"
+          element={
+            <ProtectedRoute role="Customer">
+              <ApplyPage />
             </ProtectedRoute>
           }
         />

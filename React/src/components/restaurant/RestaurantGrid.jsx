@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 const RestaurantGrid = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch restaurants data
     fetch("http://localhost:8000/api/restaurants")
       .then((response) => response.json())
       .then((data) => setRestaurants(data))
@@ -14,12 +14,31 @@ const RestaurantGrid = () => {
   }, []);
 
   const handleViewClick = (restaurantId) => {
-    // Navigate to the restaurant details page (to be implemented)
     navigate(`/restaurant/${restaurantId}`);
+  };
+
+  const handleSearch = () => {
+    // logic for taha
+    const filteredRestaurants = restaurants.filter((restaurant) =>
+      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setRestaurants(filteredRestaurants);
   };
 
   return (
     <div className="container mx-auto p-4">
+      <div className="search-container">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search Restaurants"
+          className="search-input"
+        />
+        <button onClick={handleSearch} className="search-button">
+          Search
+        </button>
+      </div>
       <div className=" font-inter font-semibold text-2xl p-6 whitespace-nowrap text-primary group transition duration-300 inline-block">
         Explore Restaurants
         <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-500"></span>

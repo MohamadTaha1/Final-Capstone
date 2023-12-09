@@ -11,38 +11,36 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        navigate('/login'); // Redirect to login if no token is found
+        navigate("/login"); // Redirect to login if no token is found
         return;
       }
 
       try {
         const response = await fetch(`http://localhost:8000/api/user/profile`, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         });
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data.name)
-          setUser({ 
+          console.log(data.name);
+          setUser({
             ...user,
             name: data.name,
-            email: data.email
-            
+            email: data.email,
+
             // birthday: data.birthday if you have it from the response
           });
         } else {
-          console.error('Failed to fetch user data:', response.statusText);
-          
+          console.error("Failed to fetch user data:", response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        
+        console.error("Error fetching user data:", error);
       }
     };
 
@@ -80,20 +78,22 @@ const Profile = () => {
           </div>
           <br></br>
           <hr className="mb-10"></hr>
-          <div className="text-left text-3xl font-edu-tas text-gray-700 font-semibold">
+          <div className="text-center text-3xl font-edu-tas text-gray-700 font-semibold">
             Application
           </div>
           <br></br>
-          <div className="text-left font-edu-tas text-gray-700 text-2xl">
-            Ready to start cooking? We will need some information about your home
-            restaurant first.
+          <div className="text-left font-edu-tas text-text2 text-xl">
+            Ready to start cooking? We will need some information about your
+            home restaurant first.
           </div>
-          <button
-            onClick={() => navigate("/apply-chef")}
-            className="text-xl px-6 py-2 border border-transparent font-medium rounded-md text-white bg-primary hover:bg-opacity-75 mt-8"
-          >
-            Apply
-          </button>
+          <div className="text-center mt-6">
+            <a
+              href="/apply"
+              className="text-xl px-4 py-2 border border-transparent font-medium rounded-md text-white bg-primary hover:bg-opacity-75 mt-20 "
+            >
+              Apply
+            </a>
+          </div>
         </div>
       </div>
     </div>

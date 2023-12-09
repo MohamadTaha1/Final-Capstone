@@ -35,10 +35,6 @@ const RestaurantDetails = () => {
       .catch((error) => console.error("Error:", error));
   }, [id]);
 
-  const goToCart = () => {
-    navigate("/checkout");
-  };
-
   const handleQuantityChange = (dishId, change) => {
     const newQuantities = {
       ...dishQuantities,
