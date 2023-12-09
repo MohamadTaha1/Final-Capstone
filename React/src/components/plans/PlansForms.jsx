@@ -22,7 +22,7 @@ const PlansForms = () => {
   ];
 
   return (
-    <div className="container mx-auto mt-20 p-4">
+    <div className="container min-h-screen mx-auto mt-20 p-4">
       <div className="flex flex-wrap justify-center gap-x-4 md:gap-x-8">
         {plans.map((plan, index) => (
           <div
