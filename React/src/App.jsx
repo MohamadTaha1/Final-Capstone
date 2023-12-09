@@ -13,6 +13,7 @@ import OrderPage from "./features/delivery/OrdersPage";
 import Delivery from "./features/delivery/DeliveryOrders";
 import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
+import SubscribePage from "./features/plans/SubscribePage";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/plans" element={<PlansPage />} />
+        <Route path="/subscribe" element={<SubscribePage />} />
 
         {/* Protected routes for customers */}
         <Route
@@ -47,7 +50,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/plans" element={<PlansPage />} />
         <Route
           path="/orders"
           element={

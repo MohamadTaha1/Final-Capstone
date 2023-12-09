@@ -44,7 +44,7 @@ const PlansForms = () => {
             <br></br>
             <div className="flex justify-center">
               <a
-                href="/checkout" // Change to your checkout page's URL
+                href="/subscribe" // Change to your checkout page's URL
                 className="inline-block bg-primary text-white py-2 px-4 rounded-lg cursor-pointer hover:bg-primary-dark transition-colors" // Add your button styles here
               >
                 Subscribe
