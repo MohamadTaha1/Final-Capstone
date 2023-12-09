@@ -83,37 +83,43 @@ const RestaurantDetails = () => {
         <img
           src={restaurant.image}
           alt={restaurant.name}
-          className="w-full h-64 object-cover mb-4"
+          className="w-full h-64 object-cover rounded-lg shadow-lg" // Added rounded-lg and shadow-lg for better image presentation
         />
-        <h1 className="text-5xl font-edu-tas text-center text-text">
+        <h1 className="text-5xl font-bold text-center my-4 text-gray-800">
+          {" "}
           {restaurant.name}
         </h1>
       </div>
-      <p className="description p-2 text-text2 text-xl font-edu-tas text-center">
+      <p className="text-xl text-center my-2 text-gray-600">
+        {" "}
         {restaurant.description}
       </p>
 
       {/* Menu Section */}
       <div className="mt-6">
-        <h2 className="text-3xl font-edu-tas text-text2 mb-4">Menu</h2>
+        <h2 className="text-3xl font-semibold text-gray-800 mb-4"> Menu</h2>
         {restaurant.menus.map((menu) =>
           menu.dishes.map((dish) => (
             <div
               key={dish.id}
-              className="dish-card bg-white p-3 shadow-md rounded-lg mb-4 flex justify-between items-center"
+              className="dish-card bg-white p-4 rounded-lg mb-4 shadow-md flex justify-between items-center" // Added padding, rounded corners, and shadow for card
             >
-              <div className="flex items-center w-44">
+              <div className="flex items-center">
                 <img
                   src={dish.image}
                   alt={dish.name}
-                  className="h-10 w-10 rounded mr-4"
+                  className="h-44 w-44 rounded-4 mr-6" 
                 />
-                <div>
-                  <h3 className="text-lg font-inter font-semibold text-text2">
+                <div className="flex flex-col justify-between">
+                  <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                    {" "}
                     {dish.name}
                   </h3>
-                  <p className="text-text">{dish.description}</p>
-                  <p className="text-text">Price: ${dish.price}</p>
+                  <p className="text-gray-600 mb-1"> {dish.description}</p>
+                  <p className="text-gray-700 font-semibold">
+                    {" "}
+                    Price: ${dish.price}
+                  </p>
                 </div>
               </div>
               <div className="quantity-selector flex items-center">
@@ -125,7 +131,7 @@ const RestaurantDetails = () => {
                 </button>
                 <input
                   type="number"
-                  className="w-12 text-center"
+                  className="w-12 text-center border-none" // Removed border for a cleaner look
                   value={dishQuantities[dish.id]}
                   readOnly
                 />
@@ -140,10 +146,11 @@ const RestaurantDetails = () => {
           ))
         )}
       </div>
-      <div className="mt-6">
+      <div className="mt-6 text-center">
+        {" "}
         <button
           onClick={goToCart}
-          className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded"
+          className="bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out" // Enhanced button style with transition for hover effect
         >
           Check Cart
         </button>
