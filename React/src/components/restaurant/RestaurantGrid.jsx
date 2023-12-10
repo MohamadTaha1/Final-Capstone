@@ -18,9 +18,12 @@ const RestaurantGrid = () => {
   };
 
   const handleSearch = () => {
-    // logic for taha
-    const filteredRestaurants = restaurants.filter((restaurant) =>
-      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const searchTermLower = searchTerm.toLowerCase();
+    const filteredRestaurants = restaurants.filter(
+      (restaurant) =>
+        restaurant.name.toLowerCase().includes(searchTermLower) ||
+        restaurant.description.toLowerCase().includes(searchTermLower) ||
+        restaurant.id.toString().includes(searchTermLower)
     );
     setRestaurants(filteredRestaurants);
   };
