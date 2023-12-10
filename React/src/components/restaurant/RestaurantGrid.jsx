@@ -29,7 +29,7 @@ const RestaurantGrid = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container min-h-screen mx-auto p-4">
       <div className="search-container mx-auto text-center">
         <input
           type="text"

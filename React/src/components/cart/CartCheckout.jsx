@@ -68,7 +68,7 @@ const CartCheckout = () => {
     <div className="flex min-h-screen bg-neutral-100">
       <div className="m-auto max-w-lg w-full">
         <div className="bg-white p-8 rounded-xl shadow-lg shadow-zinc-300">
-          <h2 className="text-3xl font-inter mb-6 text-gray-700 text-center">
+          <h2 className="text-3xl font-inter mb-6 text-text2 text-center">
             My Cart
           </h2>
 
@@ -78,7 +78,7 @@ const CartCheckout = () => {
             ))}
           </div>
           <div className="mt-6 text-center">
-            <h2 className="text-xl font-bold text-secondary">
+            <h2 className="text-xl font-bold text-text">
               Subtotal: ${calculateSubtotal()}
             </h2>
             <button
