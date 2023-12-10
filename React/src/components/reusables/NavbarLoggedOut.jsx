@@ -20,7 +20,7 @@ const NavbarLoggedOut = () => {
               Maida
             </span>
           </a>
-          {/* Burger icon foSr mobile */}
+          {/* Burger icon for mobile */}
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? (
@@ -45,22 +45,10 @@ const NavbarLoggedOut = () => {
                 Plans
               </a>
               <a
-                href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-              >
-                Orders
-              </a>
-              <a
                 href="/profile"
                 className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
               >
                 Profile
-              </a>
-              <a
-                href="/checkout"
-                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-              >
-                Cart
               </a>
               <button
                 onClick={handleLogin}

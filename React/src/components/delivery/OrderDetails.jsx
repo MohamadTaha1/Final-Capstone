@@ -48,46 +48,53 @@ const OrderDetails = () => {
 
   return (
     <div className="min-h-screen container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">My Orders</h1>
+      <h1 className="text-3xl font-inter text-center m-6">My Orders</h1>
       {orders.length > 0 ? (
         orders.map((order) => (
           <div
             key={order.id}
-            className="bg-white p-6 rounded-lg shadow-md mb-4"
+            className="bg-white p-6 rounded-lg font-inter shadow-md mb-4"
           >
-            <h2 className="text-2xl font-bold mb-3">Order ID: {order.id}</h2>
+            <h2 className="text-2xl font-inter mb-3">Order ID: {order.id}</h2>
             <p className="text-gray-600 mb-2">
               Total Price: ${order.total_price}
             </p>
-            <p className="text-gray-600 mb-2">Status: {order.status}</p>
+            <p className="text-gray-600 mb-2 font-inter ">
+              Status: {order.status}
+            </p>
             {order.restaurant && (
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-4 font-inter ">
                 Restaurant: {order.restaurant.name}
               </p>
             )}
             <div className="mt-4">
-              <h3 className="text-xl font-semibold mb-2">Order Details:</h3>
-              <ul className="list-disc pl-5">
+              <h3 className="text-xl  font-inter  mb-2">Order Details:</h3>
+              <ul className="list-disc pl-5  font-inter ">
                 {order.order_details && order.order_details.length > 0 ? (
                   order.order_details.map((detail) => (
-                    <li key={detail.id} className="text-gray-700 mb-2">
+                    <li key={detail.id} className="text-tezt2 mb-2">
                       {detail.dish && (
-                        <span className="font-semibold">
+                        <span className=" font-inter ">
                           {detail.dish.name} -{" "}
                         </span>
                       )}
                       Quantity: {detail.quantity} - Price: ${detail.price}
+                      {console.log(detail.dish)};
                     </li>
                   ))
                 ) : (
-                  <li className="text-gray-700">No order details available.</li>
+                  <li className="text-tezt2  font-inter ">
+                    No order details available.
+                  </li>
                 )}
               </ul>
             </div>
           </div>
         ))
       ) : (
-        <p className="text-center text-gray-700 text-xl">No orders found.</p>
+        <p className="text-center text-tezt2 text-xl  font-inter ">
+          No orders found.
+        </p>
       )}
     </div>
   );

@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 
 const OrderHeader = () => {
   const carouselTexts = [
-    "Welcome to Our Service",
-    "Explore Our Restaurants",
+    "Food on its way to your Maida!",
+    "Serving you the healthiest options",
     "Enjoy Delicious Meals",
-    // Add more text items as needed
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
