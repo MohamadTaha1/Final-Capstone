@@ -84,7 +84,8 @@ const Orders = () => {
                 <div className="px-6 py-4">
                     <h3 className="text-lg font-semibold mb-3">Order Details:</h3>
                     <ul className="list-disc list-inside">
-                        {order.order_details.map(detail => (
+                        {/* Add optional chaining here */}
+                        {order.order_details?.map(detail => (
                             <li key={detail.id} className="text-gray-700">
                                 {detail.dish.name} - Quantity: {detail.quantity}, Price: ${parseFloat(detail.price).toFixed(2)}
                             </li>

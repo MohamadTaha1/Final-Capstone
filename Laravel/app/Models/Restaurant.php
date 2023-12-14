@@ -14,7 +14,7 @@ class Restaurant extends Model
         'phone_number',
         'email',
         'image',
-        'owner_id',  
+        'owner_id',
     ];
 
     public function menus()
@@ -26,5 +26,16 @@ class Restaurant extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+        public function dailySpecials()
+    {
+        return $this->hasMany(DailySpecial::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
 
 }

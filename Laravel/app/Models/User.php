@@ -30,6 +30,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function subscriptions()
+{
+    return $this->hasMany(Subscription::class);
+}
+
 
 
     protected $fillable = [

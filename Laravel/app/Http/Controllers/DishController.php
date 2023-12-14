@@ -14,7 +14,6 @@ class DishController extends Controller
         return response()->json($dishes);
     }
 
-    // Store a newly created dish in the database
     public function store(Request $request)
     {
         \Log::info($request->all()); // Add this line to log request data
@@ -54,7 +53,7 @@ class DishController extends Controller
     }
 
     if ($dish->menu->restaurant->owner_id !== auth()->id()) {
-        return response()->json(['message' => 'Unauthorized'], 403);
+        return response()->json(['message' => auth()->id()], 403);
     }
 
     $validatedData = $request->validate([
@@ -75,11 +74,22 @@ class DishController extends Controller
     public function destroy(Dish $dish)
     {
         if ($dish->menu->restaurant->owner_id !== auth()->id()) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            return response()->json(['message' => 'Unauthorized' ], 403);
         }
 
         $dish->delete();
         return response()->json(['message' => 'Dish deleted successfully']);
+    }
+
+    public function show($id)
+    {
+        $dish = Dish::find($id);
+
+        if (!$dish) {
+            return response()->json(['message' => 'Dish not found'], 404);
+        }
+
+        return response()->json($dish);
     }
 
 }

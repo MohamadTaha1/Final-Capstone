@@ -15,6 +15,7 @@ import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
+import EditDish from "./components/delivery/EditDish";
 
 function App() {
   return (
@@ -85,6 +86,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/edit-dish/:dishId" element={<EditDish />} />
+
         <Route
           path="/restaurant-details/:id"
           element={

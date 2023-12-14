@@ -1,10 +1,13 @@
 import  { useState, useEffect } from 'react';
 //import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const RestaurantDetail = () => {
     const [menu, setMenu] = useState(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
     // ... other states ...
 
     useEffect(() => {
@@ -45,9 +48,6 @@ const RestaurantDetail = () => {
         const { name, value, type, checked } = event.target;
         setNewDish({ ...newDish, [name]: type === 'checkbox' ? checked : value });
     };
-    
-    
-    
 
     const fetchOwnerMenu = async () => {
         const token = localStorage.getItem('token');
@@ -66,25 +66,44 @@ const RestaurantDetail = () => {
         setLoading(false);
     };
 
-    const handleEditDish = (menuId) => {
-        console.log("Edit Menu:", menuId);
-        // Implement navigation or modal opening for editing menu
+    const handleEditDish = async (dishId) => {
+        // Navigate to edit dish form with dishId
+        // Assuming you're using React Router
+        navigate(`/edit-dish/${dishId}`);
     };
+    
 
-    const handleEdit = (menuId) => {
-        console.log("Edit Menu:", menuId);
-        // Implement navigation or modal opening for editing menu
+    const handleDeleteDish = async (dishId) => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch(`http://localhost:8000/api/dishes/${dishId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            if (response.ok) {
+                // Remove the dish from the local state
+                setMenu(prevMenu => {
+                    return {
+                        ...prevMenu,
+                        dishes: prevMenu.dishes.filter(dish => dish.id !== dishId)
+                    };
+                });
+            } else {
+                // Handle error
+                const errorData = await response.json();
+                console.error('Failed to delete dish:', errorData);
+            }
+        } catch (error) {
+            console.error('Error deleting dish:', error);
+        }
     };
+    
+    
 
-    const handleDelete = (menuId) => {
-        console.log("Delete Menu:", menuId);
-        // Implement delete logic here
-    };
 
-    const handleView = (menuId) => {
-        console.log("View Menu:", menuId);
-        // Implement view logic here
-    };
 
 
 
@@ -112,6 +131,9 @@ const RestaurantDetail = () => {
                             <button onClick={() => handleEditDish(dish.id)} className="edit-dish bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Edit
                             </button>
+                            <button onClick={() => handleDeleteDish(dish.id)} className="edit-dish bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Delete
+                            </button>
                             <img src={dish.image} alt={dish.name} className="h-10 w-10 rounded" />
                         </div>
                     </div>
@@ -119,18 +141,6 @@ const RestaurantDetail = () => {
             ) : (
                 <p>No dishes found in this menu</p>
             )}
-        </div>
-    
-        <div className="actions flex space-x-2 mb-4">
-            <button onClick={() => handleEdit(menu.id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Edit Menu
-            </button>
-            <button onClick={() => handleDelete(menu.id)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                Delete Menu
-            </button>
-            <button onClick={() => handleView(menu.id)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                View Menu
-            </button>
         </div>
     
         <div className="add-dish-form bg-gray-100 p-6 rounded-lg shadow-md">

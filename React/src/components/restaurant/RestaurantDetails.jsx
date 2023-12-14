@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 
 const RestaurantDetails = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
-  const navigate = useNavigate();
+
 
   const [dishQuantities, setDishQuantities] = useState(() => {
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
