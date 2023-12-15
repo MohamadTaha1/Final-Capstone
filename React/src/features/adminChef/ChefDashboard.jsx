@@ -1,4 +1,4 @@
-import AdminPanel from "../../components/auth/AdminPanel";
+import AdminPanel from "../../components/AdminComponents/AdminPanel";
 import Footer from "../../components/reusables/Footer";
 
 const ChefDashboard = () => {

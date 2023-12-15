@@ -4,7 +4,7 @@ import LogIn from "./features/auth/LogIn";
 import SignUp from "./features/auth/SignUp";
 import ProfilePage from "./features/User/ProfilePage";
 import Checkout from "./features/checkout/Checkout";
-import Main from "./features/adminChef/Main";
+import ChefDashboard from "./features/adminChef/ChefDashboard";
 import RestaurantDetail from "./components/restaurant/RestaurantDetail";
 import EditRestaurant from "./components/restaurant/EditRestaurant";
 import { ProtectedRoute } from "./components/auth/UseAuth";
@@ -73,7 +73,7 @@ function App() {
           path="/main"
           element={
             <ProtectedRoute role="Owner">
-              <Main />
+              <ChefDashboard />
             </ProtectedRoute>
           }
         />

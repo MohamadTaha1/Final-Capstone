@@ -1,4 +1,4 @@
-import ShowOrders from "../../components/delivery/ShowOrders";
+import ShowOrders from "../../components/DeliveryGuyComponents/ShowOrders";
 const DeliveryDashboard = () => {
   return (
     <>
