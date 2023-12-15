@@ -10,11 +10,11 @@ import EditRestaurant from "./components/restaurant/EditRestaurant";
 import { ProtectedRoute } from "./components/auth/UseAuth";
 import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/delivery/OrdersPage";
-import Delivery from "./features/delivery/DeliveryOrders";
 import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
+import DeliveryDashboard from "./features/DeliveryGuy.jsx/DeliveryDashboard";
 
 function App() {
   return (
@@ -104,7 +104,7 @@ function App() {
         />
         {/* Add other routes as needed */}
 
-        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/delivery" element={<DeliveryDashboard />} />
       </Routes>
     </BrowserRouter>
   );
