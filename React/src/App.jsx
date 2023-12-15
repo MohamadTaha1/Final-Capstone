@@ -6,7 +6,6 @@ import ProfilePage from "./features/User/ProfilePage";
 import Checkout from "./features/checkout/Checkout";
 import ChefDashboard from "./features/adminChef/ChefDashboard";
 import RestaurantDetail from "./components/restaurant/RestaurantDetail";
-import EditRestaurant from "./components/restaurant/EditRestaurant";
 import { ProtectedRoute } from "./components/auth/UseAuth";
 import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/delivery/OrdersPage";
@@ -15,6 +14,7 @@ import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
 import DeliveryDashboard from "./features/DeliveryGuy.jsx/DeliveryDashboard";
+import EditResto from "../src/features/adminChef/EditResto";
 
 function App() {
   return (
@@ -70,7 +70,7 @@ function App() {
 
         {/* Protected routes for owners */}
         <Route
-          path="/main"
+          path="/owner"
           element={
             <ProtectedRoute role="Owner">
               <ChefDashboard />
@@ -81,7 +81,7 @@ function App() {
           path="/edit-restaurant/:id"
           element={
             <ProtectedRoute role="Owner">
-              <EditRestaurant />
+              <EditResto />
             </ProtectedRoute>
           }
         />

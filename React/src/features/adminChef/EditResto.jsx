@@ -1,6 +1,6 @@
-import EditRestaurant from "../../components/auth/EditRestaurant";
+import EditRestaurant from "../../components/AdminComponents/EditRestaurant";
 
-const Admin = () => {
+const EditResto = () => {
   return (
     <>
       <EditRestaurant />
@@ -8,4 +8,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default EditResto;
