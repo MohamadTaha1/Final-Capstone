@@ -60,16 +60,19 @@ const EditRestaurant = () => {
     );
 
     if (response.ok) {
-      navigate("/main"); // Navigate back to the main page or dashboard
+      navigate("/owner"); // Navigate back to the main page or dashboard
     } else {
       console.error("Failed to update restaurant");
     }
   };
 
   return (
-    <div className="container min-h-screen mx-auto p-4">
+    <div className="container min-h-screen mx-auto mt-20 p-4">
+      {" "}
       <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold text-center mb-6">Edit Restaurant</h2>
+        <h2 className="text-3xl font-inter text-center mb-6">
+          Edit Restaurant
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name field */}
           <div>
@@ -171,13 +174,23 @@ const EditRestaurant = () => {
               required
             />
           </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200"
-          >
-            Update Restaurant
-          </button>
+          <div className="flex justify-between space-x-4">
+            {" "}
+            {/* Adjusted for layout */}
+            <button
+              type="submit"
+              className="bg-primary hover:bg-orange-500 text-white font-inter py-2 px-4 rounded-md transition-colors duration-200 flex-grow"
+            >
+              Update Restaurant
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/owner")}
+              className="bg-gray-300 hover:bg-gray-400 text-black font-inter py-2 px-4 rounded-md transition-colors duration-200 flex-grow"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

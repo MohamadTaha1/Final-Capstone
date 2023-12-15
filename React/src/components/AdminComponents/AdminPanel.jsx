@@ -3,13 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminPanel = () => {
   const [restaurants, setRestaurants] = useState([]);
-
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login"); // Redirect to login page after logout
-  };
 
   const fetchOwnerRestaurants = async () => {
     const token = localStorage.getItem("token");
@@ -51,7 +45,6 @@ const AdminPanel = () => {
     );
 
     if (response.ok) {
-      // Remove the restaurant from the state or re-fetch the list
       fetchOwnerRestaurants();
     } else {
       console.error("Failed to delete restaurant");
@@ -59,26 +52,12 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="container min-h-screen mx-auto p-4">
-      {/* Top Navigation */}
-      <div className="flex justify-between items-center bg-gray-100 p-4 rounded-md mb-6 shadow-sm">
-        <h2 className="text-3xl font-bold italic text-red-600">Maida</h2>
-        <h3 className="text-2xl font-semibold">Chef Dashboard</h3>
-        <div>
-          <button
-            onClick={handleLogout}
-            className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-          >
-            Logout
-          </button>
-        </div>{" "}
-        {/* Placeholder for potential future navigation items */}
-      </div>
-
-      {/* Dashboard Content */}
+    <div className="container min-h-screen mx-auto mt-20 p-4">
       <div className="my-4">
-        <h1 className="text-2xl font-bold mb-2">Welcome to Your Dashboard</h1>
-        <p className="text-gray-600 mb-4">
+        <h1 className="text-2xl font-inter mb-2 text-center text-secondary">
+          Welcome to Your Dashboard
+        </h1>
+        <p className="mb-4 font-inter text-center text-secondary">
           Manage your restaurants and view orders here.
         </p>
 
@@ -89,21 +68,21 @@ const AdminPanel = () => {
                 key={restaurant.id}
                 className="bg-white shadow-md rounded-lg mb-4 p-6 relative"
               >
-                <h3 className="text-xl font-semibold text-red-600">
+                <h3 className="text-2xl text-secondary font-inter">
                   {restaurant.name}
                 </h3>
-                <p className="text-gray-500 mt-2 mb-4">
+                <p className="mt-2 mb-4 font-inter text-secondary">
                   {restaurant.description}
                 </p>
                 <div className="absolute top-6 right-6 flex space-x-2">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white rounded-md py-2 px-4 transition-all duration-300"
+                    className="bg-primary hover:bg-orange-400 text-white rounded-md py-2 px-4 transition-all duration-300"
                     onClick={() => editRestaurant(restaurant.id)}
                   >
                     Edit
                   </button>
                   <button
-                    className="bg-red-500 hover:bg-red-700 text-white rounded-md py-2 px-4 transition-all duration-300"
+                    className=" bg-blue-700 hover:bg-blue-800 text-white rounded-md py-2 px-4 transition-all duration-300"
                     onClick={() => deleteRestaurant(restaurant.id)}
                   >
                     Delete
@@ -112,7 +91,7 @@ const AdminPanel = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-500">
+            <p className="text-center font-inter text-secondary">
               No restaurants to display
             </p>
           )}
