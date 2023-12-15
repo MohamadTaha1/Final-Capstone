@@ -72,7 +72,7 @@ const OrderDetails = () => {
               <ul className="list-disc pl-5  font-inter ">
                 {order.order_details && order.order_details.length > 0 ? (
                   order.order_details.map((detail) => (
-                    <li key={detail.id} className="text-tezt2 mb-2">
+                    <li key={detail.id} className="text-text2 mb-2">
                       {detail.dish && (
                         <span className=" font-inter ">
                           {detail.dish.name} -{" "}
@@ -83,7 +83,7 @@ const OrderDetails = () => {
                     </li>
                   ))
                 ) : (
-                  <li className="text-tezt2  font-inter ">
+                  <li className="text-text2  font-inter ">
                     No order details available.
                   </li>
                 )}
@@ -92,7 +92,7 @@ const OrderDetails = () => {
           </div>
         ))
       ) : (
-        <p className="text-center text-tezt2 text-xl  font-inter ">
+        <p className="text-center text-text2 text-xl  font-inter ">
           No orders found.
         </p>
       )}
