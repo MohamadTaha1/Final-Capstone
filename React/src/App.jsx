@@ -15,6 +15,7 @@ import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
 import DeliveryDashboard from "./features/DeliveryGuy.jsx/DeliveryDashboard";
 import EditResto from "../src/features/adminChef/EditResto";
+import AddDish from "./features/adminChef/AddDish";
 
 function App() {
   return (
@@ -74,6 +75,14 @@ function App() {
           element={
             <ProtectedRoute role="Owner">
               <ChefDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dish"
+          element={
+            <ProtectedRoute role="Owner">
+              <AddDish />
             </ProtectedRoute>
           }
         />
