@@ -154,7 +154,7 @@ const RestaurantDetail = () => {
         )}
       </div>
 
-      <div className="actions flex space-x-2 mb-4">
+      {/* <div className="actions flex space-x-2 mb-4">
         <button
           onClick={() => handleEdit(menu.id)}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -173,7 +173,7 @@ const RestaurantDetail = () => {
         >
           View Menu
         </button>
-      </div>
+      </div> */}
 
       <div className="add-dish-form bg-gray-100 p-6 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold mb-6">Add New Dish</h2>

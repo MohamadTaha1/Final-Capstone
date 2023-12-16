@@ -59,7 +59,7 @@ const EditDishForm = () => {
 
             if (response.ok) {
                 alert('Dish updated successfully');
-                navigate('/main'); // Redirect to a specific page after update
+                navigate('/owner'); // Redirect to a specific page after update
             } else {
                 const errorData = await response.json();
                 console.error('Failed to update dish:', errorData);

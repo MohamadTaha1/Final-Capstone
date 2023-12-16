@@ -1,11 +1,11 @@
 import DailySpecialsPage from '../../components/plans/DailySpecials';
-import Main from "../../components/auth/AdminPanel";
+import AdminNav from '../../components/AdminComponents/AdminNav';
 
 const DisplayDailySpecials= () => {
  
   return (
     <>
-      <Main/>
+        <AdminNav/>
       <DailySpecialsPage/>
     </>
   );
