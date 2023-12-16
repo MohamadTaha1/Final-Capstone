@@ -4,22 +4,20 @@ import LogIn from "./features/auth/LogIn";
 import SignUp from "./features/auth/SignUp";
 import ProfilePage from "./features/User/ProfilePage";
 import Checkout from "./features/checkout/Checkout";
-import Main from "./features/adminChef/Main";
+import ChefDashboard from "./features/adminChef/ChefDashboard";
 import RestaurantDetail from "./components/restaurant/RestaurantDetail";
-import EditRestaurant from "./components/restaurant/EditRestaurant";
 import { ProtectedRoute } from "./components/auth/UseAuth";
 import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/delivery/OrdersPage";
-import Delivery from "./features/delivery/DeliveryOrders";
 import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
+import DeliveryDashboard from "./features/DeliveryGuy.jsx/DeliveryDashboard";
+import EditResto from "../src/features/adminChef/EditResto";
+import AddDish from "./features/adminChef/AddDish";
 import EditDish from "./components/delivery/EditDish";
 import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
-
-// ...
-
 
 function App() {
   return (
@@ -75,10 +73,18 @@ function App() {
 
         {/* Protected routes for owners */}
         <Route
-          path="/main"
+          path="/owner"
           element={
             <ProtectedRoute role="Owner">
-              <Main />
+              <ChefDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dish"
+          element={
+            <ProtectedRoute role="Owner">
+              <AddDish />
             </ProtectedRoute>
           }
         />
@@ -86,7 +92,7 @@ function App() {
           path="/edit-restaurant/:id"
           element={
             <ProtectedRoute role="Owner">
-              <EditRestaurant />
+              <EditResto />
             </ProtectedRoute>
           }
         />
@@ -117,7 +123,7 @@ function App() {
         } />
         {/* Add other routes as needed */}
 
-        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/delivery" element={<DeliveryDashboard />} />
       </Routes>
     </BrowserRouter>
   );

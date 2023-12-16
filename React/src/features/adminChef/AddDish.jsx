@@ -1,15 +1,15 @@
 import AdminNav from "../../components/AdminComponents/AdminNav";
-import EditRestaurant from "../../components/AdminComponents/EditRestaurant";
+import DishForm from "../../components/AdminComponents/DishForm";
 import Footer from "../../components/reusables/Footer";
 
-const EditResto = () => {
+const AddDish = () => {
   return (
     <>
       <AdminNav />
-      <EditRestaurant />
+      <DishForm />
       <Footer />
     </>
   );
 };
 
-export default EditResto;
+export default AddDish;

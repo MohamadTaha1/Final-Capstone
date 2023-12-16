@@ -51,38 +51,42 @@ const Profile = () => {
     <div className="flex min-h-screen bg-neutral-100">
       <div className="m-auto max-w-lg w-full">
         <div className="bg-white py-8 px-8 m-4 rounded-xl shadow-lg shadow-zinc-300">
-          <h2 className="text-4xl font-edu-tas mb-6 text-gray-700 font-semibold">
-            Account
-          </h2>
+          <h2 className="text-4xl font-edu-tas mb-6 text-text">Account</h2>
           <hr className="mb-10"></hr>
-          <h3 className="text-left text-3xl font-edu-tas text-gray-700 font-semibold">
+          <h3 className="text-left text-3xl font-edu-tas text-text ">
             Profile
           </h3>
           <br></br>
           {/* Container for username title and username */}
           <div className="flex flex-col">
             <div>
-              <div className="text-xl text-primary text-left">Username</div>
-              <div className="text-xl text-left">{user.name}</div>
+              <div className="text-xl text-primary text-left font-edu-tas">
+                Username
+              </div>
+              <div className="text-xl text-left font-edu-tas">{user.name}</div>
             </div>
             <div className="my-8">
-              <div className="text-xl text-primary text-left">Email</div>
-              <div className="text-xl text-left">{user.email}</div>
+              <div className="text-xl text-primary text-left font-edu-tas">
+                Email
+              </div>
+              <div className="text-xl text-left font-edu-tas">{user.email}</div>
             </div>
             <div>
-              <div className="text-xl text-primary  text-left">
+              <div className="text-xl text-primary font-edu-tas text-left">
                 Date of birth
               </div>
-              <div className="text-xl text-left">{user.birthday}</div>
+              <div className="text-xl text-left font-edu-tas">
+                {user.birthday}
+              </div>
             </div>
           </div>
           <br></br>
           <hr className="mb-10"></hr>
-          <div className="text-center text-3xl font-edu-tas text-gray-700 font-semibold">
+          <div className="text-center text-3xl font-edu-tas text-text font-semibold">
             Application
           </div>
           <br></br>
-          <div className="text-left font-edu-tas text-text2 text-xl">
+          <div className="text-left font-edu-tas text-text text-xl">
             Ready to start cooking? We will need some information about your
             home restaurant first.
           </div>

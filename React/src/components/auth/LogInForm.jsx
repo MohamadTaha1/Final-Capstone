@@ -32,7 +32,7 @@ const LogInForm = () => {
       // Check the user's role and navigate accordingly
       const userRole = data.user.role; // Assuming the role is part of the user object
       if (userRole === "Owner") {
-        navigate("/main"); // Redirect to restaurant page
+        navigate("/owner"); // Redirect to restaurant page
       }else if (userRole === "Delivery"){
         navigate("/delivery");
       }else{
