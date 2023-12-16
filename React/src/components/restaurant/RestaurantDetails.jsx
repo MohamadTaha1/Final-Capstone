@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 
 const RestaurantDetails = () => {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
+  const [dailySpecials, setDailySpecials] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
 
   const [dishQuantities, setDishQuantities] = useState(() => {
@@ -16,25 +19,21 @@ const RestaurantDetails = () => {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/restaurants/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setRestaurant(data);
-
-        const initialQuantities = data.menus.reduce((acc, menu) => {
-          menu.dishes.forEach((dish) => {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartItem = cart.find((item) => item.id === dish.id);
-            acc[dish.id] = cartItem ? cartItem.quantity : 0; // Initialize quantity from local storage if exists, else 0
-          });
-          return acc;
-        }, {});
-
-        setDishQuantities(initialQuantities);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, [id]);
-
+    axios.get(`http://localhost:8000/api/restaurants/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    }).then(response => {
+        setRestaurant(response.data);
+        return axios.get(`http://localhost:8000/api/restaurant/${id}/daily-specials`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+    }).then(response => {
+        setDailySpecials(response.data);
+        setIsLoading(false);
+    }).catch(error => {
+        console.error('Error:', error);
+        setIsLoading(false);
+    });
+}, [id]);
   const handleQuantityChange = (dishId, change) => {
     const newQuantities = {
       ...dishQuantities,
@@ -68,9 +67,12 @@ const RestaurantDetails = () => {
     localStorage.setItem("cart", JSON.stringify(cart));
   };
 
+
   if (!restaurant) {
     return <div>Loading...</div>;
   }
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="container mx-auto p-4">
@@ -94,6 +96,36 @@ const RestaurantDetails = () => {
         {" Restaurant ID: "}
         {restaurant.id}
       </p>
+      {/* Daily Specials Section */}
+      <div className="mt-6">
+        <h2 className="text-3xl font-inter text-text mb-4">Daily Specials</h2>
+        {dailySpecials.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto text-gray-700">
+              <thead>
+                <tr className="bg-gray-100 border-b">
+                  <th className="px-4 py-2 text-left">Day</th>
+                  <th className="px-4 py-2 text-left">Dish</th>
+                  <th className="px-4 py-2 text-left">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dailySpecials.map((special, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="px-4 py-2">{dayOfWeek(special.day_of_week)}</td>
+                    <td className="px-4 py-2">{special.dish.name}</td>
+                    <td className="px-4 py-2">
+                      ${parseFloat(special.price).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p>No daily specials available.</p>
+        )}
+      </div>  
       <div className="mt-6 text-center">
         {" "}
         <a
@@ -165,6 +197,11 @@ const RestaurantDetails = () => {
       </div>
     </div>
   );
+};
+
+const dayOfWeek = (index) => {
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  return days[index] || "Unknown";
 };
 
 export default RestaurantDetails;

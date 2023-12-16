@@ -25,6 +25,7 @@ const Main = () => {
         if (response.ok) {
             const data = await response.json();
             setRestaurants(data);
+            console.log(data);
         } else {
             console.error('Failed to fetch owner\'s restaurants');
         }

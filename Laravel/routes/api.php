@@ -42,6 +42,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/dishes', [DishController::class, 'index']); // List all dishes
+    Route::get('/dishes/{id}', [DishController::class, 'show']); // Get a single dish
+});
+
+// Protected Dish Routes for Restaurant Owners
+Route::middleware(['auth:sanctum', 'isOwner'])->group(function () {
+    Route::apiResource('/dishes', DishController::class);
+    Route::post('/dishes', [DishController::class, 'store']); // Create a new dish
+    Route::put('/dishes/{dish}', [DishController::class, 'update']); // Update an existing dish
+    Route::delete('/dishes/{dish}', [DishController::class, 'destroy']); // Delete a dish
+});
+
 
 Route::middleware('auth:sanctum', 'isDelivery')->group(function () {
     Route::get('/delivery/current-order', [DeliveryController::class, 'getCurrentAssignedOrder']);
@@ -83,12 +96,16 @@ Route::middleware(['auth:sanctum', 'isOwner'])->group(function () {
 Route::middleware(['auth:sanctum', 'isOwner'])->group(function () {
     Route::get('/restaurant/orders', [OrderController::class, 'getRestaurantOrders']);
     Route::post('/restaurant/orders/{id}/confirm', [OrderController::class, 'confirmOrder']);
-    Route::apiResource('/dishes', DishController::class);
-    Route::delete('/dishes/{dish}', [DishController::class, 'destroy']);
-    Route::get('/dishes/{id}', [DishController::class, 'show']);
+
+
 
 
 });
+
+
+Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->get('/user/subscription', [SubscriptionController::class, 'getUserSubscription']);
+
 
 // User Orders Routes
 // Add these inside your routes/api.php file
@@ -101,17 +118,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/orders/{order}', [OrderController::class, 'update']); // Update an order
     Route::delete('/orders/{order}', [OrderController::class, 'destroy']); // Delete an order
     //SubscriptionPlans
-    Route::get('/view-specials', [SubscriptionController::class, 'viewSpecials']);
-    Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
-    Route::get('/user-subscriptions', [SubscriptionController::class, 'userSubscriptions']);
-    Route::delete('/unsubscribe/{id}', [SubscriptionController::class, 'unsubscribe']);
 
     // Routes for DailySpecialController
-    Route::get('/daily-specials', [DailySpecialController::class, 'index']);
+
     Route::post('/daily-specials', [DailySpecialController::class, 'store']);
-    Route::get('/daily-specials/{id}', [DailySpecialController::class, 'show']);
+    Route::get('/restaurants/{restaurantId}/daily-specials', [DailySpecialController::class, 'showByRestaurant']);
     Route::patch('/daily-specials/{id}', [DailySpecialController::class, 'update']);
-    Route::delete('/daily-specials/{id}', [DailySpecialController::class, 'destroy']);
+
+    Route::get('/user/subscription-details', [SubscriptionController::class, 'getUserSubscriptionDetails']);
+    Route::get('/restaurant/{restaurantId}/daily-specials', [DailySpecialController::class, 'getDailySpecialsForRestaurant']);
+
+
 });
 
 

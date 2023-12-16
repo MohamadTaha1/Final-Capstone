@@ -16,6 +16,10 @@ import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
 import EditDish from "./components/delivery/EditDish";
+import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
+
+// ...
+
 
 function App() {
   return (
@@ -105,6 +109,12 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/dailys" element={
+          <ProtectedRoute role="Owner">
+            <DisplayDailySpecials />
+          </ProtectedRoute>
+        } />
         {/* Add other routes as needed */}
 
         <Route path="/delivery" element={<Delivery />} />
