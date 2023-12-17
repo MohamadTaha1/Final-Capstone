@@ -44,7 +44,7 @@ const Orders = () => {
     if (response.ok) {
       const data = await response.json();
       console.log(data);
-      setOrders(data);
+      setOrders(data.reverse());
     } else {
       console.error("Failed to fetch orders");
     }
