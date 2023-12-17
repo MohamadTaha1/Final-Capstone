@@ -23,11 +23,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/" element={<LogIn />} />
         <Route path="/plans" element={<PlansPage />} />
         <Route path="/subscribe" element={<SubscribePage />} />
+        <Route path="/home" element={<LandingPage />} />
 
         {/* Protected routes for customers */}
         <Route
@@ -39,7 +39,7 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path="/home"
           element={
             <ProtectedRoute role="Customer">
               <LandingPage />
@@ -116,11 +116,14 @@ function App() {
           }
         />
 
-        <Route path="/dailys" element={
-          <ProtectedRoute role="Owner">
-            <DisplayDailySpecials />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/dailys"
+          element={
+            <ProtectedRoute role="Owner">
+              <DisplayDailySpecials />
+            </ProtectedRoute>
+          }
+        />
         {/* Add other routes as needed */}
 
         <Route path="/delivery" element={<DeliveryDashboard />} />
