@@ -1,12 +1,13 @@
-import DailySpecialsPage from '../../components/plans/DailySpecials';
-import AdminNav from '../../components/AdminComponents/AdminNav';
+import DailySpecialsPage from "../../components/plans/DailySpecials";
+import AdminNav from "../../components/AdminComponents/AdminNav";
+import Footer from "../../components/reusables/Footer";
 
-const DisplayDailySpecials= () => {
- 
+const DisplayDailySpecials = () => {
   return (
     <>
-        <AdminNav/>
-      <DailySpecialsPage/>
+      <AdminNav />
+      <DailySpecialsPage />
+      <Footer />
     </>
   );
 };
