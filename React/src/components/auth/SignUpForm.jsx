@@ -13,12 +13,17 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:8000/api/register', {
+    const response = await fetch("http://localhost:8000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, password_confirmation: passwordConfirmation }), // Adjusted to match Laravel's expected fields
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        password_confirmation: passwordConfirmation,
+      }), // Adjusted to match Laravel's expected fields
     });
 
     if (response.ok) {
@@ -28,7 +33,7 @@ const SignUpForm = () => {
       localStorage.setItem("role", data.user.role);
 
       // Check the user's role and navigate accordingly
-      navigate('/home'); // Navigate to landing page on success
+      navigate("/home"); // Navigate to landing page on success
     } else {
       const errorData = await response.json();
       console.error("Registration failed:", errorData);
@@ -53,7 +58,7 @@ const SignUpForm = () => {
                 type="text"
                 name="Name"
                 className="w-full p-2 font-inter border border-gray-200 rounded-md focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-300"
-                placeholder="name"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => setUsername(e.target.value)}
                 required
