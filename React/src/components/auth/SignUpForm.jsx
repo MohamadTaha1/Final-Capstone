@@ -106,10 +106,7 @@ const SignUpForm = () => {
           </form>
           <div className="text-center font-inter text-gray-700">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-primary font-inter hover:underline"
-            >
+            <a href="/" className="text-primary font-inter hover:underline">
               Login
             </a>
           </div>
