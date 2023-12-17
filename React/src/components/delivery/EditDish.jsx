@@ -74,6 +74,9 @@ const EditDishForm = () => {
       console.error("Error updating dish:", error);
     }
   };
+  const handleCancel = () => {
+    navigate("/menu"); // Redirects to /menu when the cancel button is clicked
+  };
 
   return (
     <div className="container min-h-screen mx-auto mt-20 p-4">
@@ -145,12 +148,21 @@ const EditDishForm = () => {
           />
           <label htmlFor="available">Available</label>
         </div>
-        <button
-          type="submit"
-          className="bg-primary text-white px-4 py-2 rounded hover:bg-orange-500"
-        >
-          Update Dish
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="bg-primary text-white px-4 py-2 rounded hover:bg-orange-500"
+          >
+            Update Dish
+          </button>
+          <button
+            type="button" // This should be a regular button, not a submit button
+            onClick={handleCancel}
+            className="bg-text m-4 text-white px-4 py-2 rounded hover:bg-red-500" // Example styling
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
