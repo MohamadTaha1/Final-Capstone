@@ -199,167 +199,174 @@ const DailySpecialsPage = () => {
 
   if (scheduleExists) {
     return (
-      <div className="container mx-auto ">
-        <h2 className="text-2xl font-bold text-center mb-4">
-          Your Restaurants Daily Specials
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white shadow-md rounded-lg">
-            <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-              <tr>
-                <th className="py-3 px-6 text-left">Day of Week</th>
-                <th className="py-3 px-6 text-left">Dish</th>
-                <th className="py-3 px-6 text-center">Price</th>
-                <th className="py-3 px-6 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 text-sm font-light">
-              {Object.entries(specials).map(
-                ([dayOfWeek, { dishId, price }]) => (
-                  <tr
-                    key={dayOfWeek}
-                    className="border-b border-gray-200 hover:bg-gray-100"
-                  >
-                    <td className="py-3 px-6 text-left whitespace-nowrap">
-                      {dayOfWeek}
-                    </td>
-                    <td className="py-3 px-6 text-left">
-                      {editing === dayOfWeek ? (
-                        <select
-                          className="form-select block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          value={specials[dayOfWeek].dishId}
-                          onChange={(e) =>
-                            handleSpecialChange(
-                              dayOfWeek,
-                              e.target.value,
-                              price
-                            )
-                          }
-                        >
-                          {dishes.map((dish) => (
-                            <option key={dish.id} value={dish.id}>
-                              {dish.name}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        dishes.find((dish) => dish.id === dishId)?.name ||
-                        "Dish not found"
-                      )}
-                    </td>
-                    <td className="py-3 px-6 text-center">
-                      {editing === dayOfWeek ? (
-                        <input
-                          className="form-input block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                          type="number"
-                          value={specials[dayOfWeek].price}
-                          onChange={(e) =>
-                            handleSpecialChange(
-                              dayOfWeek,
-                              dishId,
-                              e.target.value
-                            )
-                          }
-                        />
-                      ) : (
-                        `$${price}`
-                      )}
-                    </td>
-                    <td className="py-3 px-6 text-center">
-                      {editing === dayOfWeek ? (
-                        <button
-                          onClick={() => handleConfirmClick(dayOfWeek)}
-                          className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                          type="button"
-                          style={{ transition: "all .15s ease" }}
-                        >
-                          Confirm
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleEditClick(dayOfWeek)}
-                          className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                          type="button"
-                          style={{ transition: "all .15s ease" }}
-                        >
-                          Edit
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
+      <div className="container min-h-screen mx-auto mt-20 p-4">
+        {" "}
+        <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-4">
+          <h2 className="text-2xl font-bold text-center mb-4">
+            Your Restaurants Daily Specials
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white shadow-md rounded-lg">
+              <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <tr>
+                  <th className="py-3 px-6 text-left">Day of Week</th>
+                  <th className="py-3 px-6 text-left">Dish</th>
+                  <th className="py-3 px-6 text-center">Price</th>
+                  <th className="py-3 px-6 text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-600 text-sm font-light">
+                {Object.entries(specials).map(
+                  ([dayOfWeek, { dishId, price }]) => (
+                    <tr
+                      key={dayOfWeek}
+                      className="border-b border-gray-200 hover:bg-gray-100"
+                    >
+                      <td className="py-3 px-6 text-left whitespace-nowrap">
+                        {dayOfWeek}
+                      </td>
+                      <td className="py-3 px-6 text-left">
+                        {editing === dayOfWeek ? (
+                          <select
+                            className="form-select block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                            value={specials[dayOfWeek].dishId}
+                            onChange={(e) =>
+                              handleSpecialChange(
+                                dayOfWeek,
+                                e.target.value,
+                                price
+                              )
+                            }
+                          >
+                            {dishes.map((dish) => (
+                              <option key={dish.id} value={dish.id}>
+                                {dish.name}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          dishes.find((dish) => dish.id === dishId)?.name ||
+                          "Dish not found"
+                        )}
+                      </td>
+                      <td className="py-3 px-6 text-center">
+                        {editing === dayOfWeek ? (
+                          <input
+                            className="form-input block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                            type="number"
+                            value={specials[dayOfWeek].price}
+                            onChange={(e) =>
+                              handleSpecialChange(
+                                dayOfWeek,
+                                dishId,
+                                e.target.value
+                              )
+                            }
+                          />
+                        ) : (
+                          `$${price}`
+                        )}
+                      </td>
+                      <td className="py-3 px-6 text-center">
+                        {editing === dayOfWeek ? (
+                          <button
+                            onClick={() => handleConfirmClick(dayOfWeek)}
+                            className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            style={{ transition: "all .15s ease" }}
+                          >
+                            Confirm
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleEditClick(dayOfWeek)}
+                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                            type="button"
+                            style={{ transition: "all .15s ease" }}
+                          >
+                            Edit
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">
-        Manage Daily Specials for Your Restaurant
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {[
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ].map((day, index) => (
-          <div
-            key={day}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center"
-          >
-            <label className="block text-lg font-medium text-gray-700">
-              {day}
-            </label>
-            <select
-              className="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
-              value={specials[index]?.dishId || ""}
-              onChange={(e) =>
-                handleSpecialChange(
-                  index,
-                  e.target.value,
-                  specials[index]?.price || ""
-                )
-              }
+    <div className="container min-h-screen mx-auto mt-20 p-4">
+      {" "}
+      <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-4">
+        {" "}
+        <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">
+          Manage Daily Specials for Your Restaurant
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {[
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ].map((day, index) => (
+            <div
+              key={day}
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center"
             >
-              <option value="">Select a Dish</option>
-              {dishes.map((dish) => (
-                <option key={dish.id} value={dish.id}>
-                  {dish.name}
-                </option>
-              ))}
-            </select>
-            <input
-              className="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
-              type="number"
-              value={specials[index]?.price || ""}
-              onChange={(e) =>
-                handleSpecialChange(
-                  index,
-                  specials[index]?.dishId || "",
-                  e.target.value
-                )
-              }
-              placeholder="Price"
-            />
+              <label className="block text-lg font-medium text-gray-700">
+                {day}
+              </label>
+              <select
+                className="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
+                value={specials[index]?.dishId || ""}
+                onChange={(e) =>
+                  handleSpecialChange(
+                    index,
+                    e.target.value,
+                    specials[index]?.price || ""
+                  )
+                }
+              >
+                <option value="">Select a Dish</option>
+                {dishes.map((dish) => (
+                  <option key={dish.id} value={dish.id}>
+                    {dish.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                className="block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent"
+                type="number"
+                value={specials[index]?.price || ""}
+                onChange={(e) =>
+                  handleSpecialChange(
+                    index,
+                    specials[index]?.dishId || "",
+                    e.target.value
+                  )
+                }
+                placeholder="Price"
+              />
+            </div>
+          ))}
+          <div className="text-center">
+            <button
+              className="bg-blue-500 text-white font-bold uppercase text-lg px-6 py-3 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:shadow-outline mt-4"
+              type="submit"
+            >
+              Save Specials
+            </button>
           </div>
-        ))}
-        <div className="text-center">
-          <button
-            className="bg-blue-500 text-white font-bold uppercase text-lg px-6 py-3 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:shadow-outline mt-4"
-            type="submit"
-          >
-            Save Specials
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
