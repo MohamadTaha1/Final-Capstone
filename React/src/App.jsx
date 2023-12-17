@@ -18,6 +18,7 @@ import EditResto from "../src/features/adminChef/EditResto";
 import AddDish from "./features/adminChef/AddDish";
 import EditDish from "./components/delivery/EditDish";
 import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
+import MenuPage from "./features/adminChef/MenuPage";
 
 function App() {
   return (
@@ -85,6 +86,14 @@ function App() {
           element={
             <ProtectedRoute role="Owner">
               <AddDish />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            <ProtectedRoute role="Owner">
+              <MenuPage />
             </ProtectedRoute>
           }
         />

@@ -52,7 +52,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="container min-h-screen mx-auto mt-20 p-4">
+    <div className="container mx-auto mt-20 p-4">
       <div className="my-4">
         <h1 className="text-2xl font-inter mb-2 text-center text-secondary">
           Welcome to Your Dashboard
