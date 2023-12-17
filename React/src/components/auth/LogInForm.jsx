@@ -36,7 +36,7 @@ const LogInForm = () => {
       }else if (userRole === "Delivery"){
         navigate("/delivery");
       }else{
-        navigate("/"); // Redirect to landing page for customers
+        navigate("/home"); // Redirect to landing page for customers
       }
     } else {
       setErrorMessage("Invalid username and/or password");

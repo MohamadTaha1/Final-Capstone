@@ -28,7 +28,7 @@ const SignUpForm = () => {
       localStorage.setItem("role", data.user.role);
 
       // Check the user's role and navigate accordingly
-      navigate('/'); // Navigate to landing page on success
+      navigate('/home'); // Navigate to landing page on success
     } else {
       const errorData = await response.json();
       console.error("Registration failed:", errorData);
