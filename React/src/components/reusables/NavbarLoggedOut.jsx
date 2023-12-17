@@ -39,12 +39,6 @@ const NavbarLoggedOut = () => {
             {/* Navigation Links */}
             <div className="px-8 py-2 md:flex md:space-x-4">
               <a
-                href="/plans"
-                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-              >
-                Plans
-              </a>
-              <a
                 href="/profile"
                 className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
               >
