@@ -76,8 +76,8 @@ const Orders = () => {
 
   return (
     <div className="container min-h-screen mx-auto p-6">
-      <h1 className="text-4xl font-bold text-center mb-10 text-gray-800">
-        Restaurant Orders
+      <h1 className="text-3xl font-inter text-center mb-10 text-text2">
+        My Orders
       </h1>
       {orders.length === 0 ? (
         <p className="text-center text-xl text-gray-600">No orders found</p>
@@ -88,10 +88,10 @@ const Orders = () => {
             className="mb-6 bg-white rounded-lg shadow-lg overflow-hidden"
           >
             <div className={`p-6 ${getStatusBackground(order.status)}`}>
-              <h2 className="text-2xl font-semibold mb-2">Order #{order.id}</h2>
+              <h2 className="text-2xl font-inter mb-2">Order #{order.id}</h2>
               <p className="text-lg">
                 Status:{" "}
-                <span className={`font-bold ${getStatusColor(order.status)}`}>
+                <span className={`font-inter ${getStatusColor(order.status)}`}>
                   {order.status}
                 </span>
               </p>
@@ -103,7 +103,7 @@ const Orders = () => {
               )}
             </div>
             <div className="px-6 py-4">
-              <h3 className="text-lg font-semibold mb-3">Order Details:</h3>
+              <h3 className="text-lg font-inter mb-3">Order Details:</h3>
               <ul className="list-disc list-inside">
                 {order.order_details.map((detail) => (
                   <li key={detail.id} className="text-gray-700">
@@ -114,10 +114,10 @@ const Orders = () => {
               </ul>
             </div>
             {order.status === "pending" && (
-              <div className="px-6 py-4">
+              <div className="px-6 py-4 text-center">
                 <button
                   onClick={() => confirmOrder(order.id)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                  className="bg-primary hover:bg-orange-500 text-white font-inter py-2 px-4 rounded transition duration-300 ease-in-out"
                 >
                   Confirm Order
                 </button>

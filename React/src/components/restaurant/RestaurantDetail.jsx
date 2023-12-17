@@ -110,7 +110,6 @@ const RestaurantDetail = () => {
 
   return (
     <div className="container min-h-screen mx-auto mt-20 p-6">
-      <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-4">
         <h2 className="text-2xl font-bold text-text">Menu: {menu.title}</h2>
         <p className="text-gray-600 mb-4">{menu.description}</p>
 
@@ -129,13 +128,13 @@ const RestaurantDetail = () => {
                 <div className="flex justify-between items-center mt-2">
                   <button
                     onClick={() => handleEditDish(dish.id)}
-                    className="edit-dish bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="edit-dish bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDeleteDish(dish.id)}
-                    className="edit-dish bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="edit-dish bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded"
                   >
                     Delete
                   </button>
@@ -283,7 +282,6 @@ const RestaurantDetail = () => {
           </form>
         </div>
       </div>
-    </div>
   );
 };
 

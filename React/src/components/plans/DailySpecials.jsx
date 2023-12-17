@@ -200,14 +200,13 @@ const DailySpecialsPage = () => {
   if (scheduleExists) {
     return (
       <div className="container min-h-screen mx-auto mt-20 p-4">
-        {" "}
-        <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-4">
-          <h2 className="text-2xl font-bold text-center mb-4">
-            Your Restaurants Daily Specials
+        <div className="container mx-auto">
+          <h2 className="text-2xl font-inter text-center mb-4 text-text2">
+            My Daily Specials
           </h2>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white shadow-md rounded-lg">
-              <thead className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+              <thead className="bg-gray-200 text-text uppercase text-sm leading-normal">
                 <tr>
                   <th className="py-3 px-6 text-left">Day of Week</th>
                   <th className="py-3 px-6 text-left">Dish</th>
@@ -215,7 +214,7 @@ const DailySpecialsPage = () => {
                   <th className="py-3 px-6 text-center">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-gray-600 text-sm font-light">
+              <tbody className="text-text text-sm font-light">
                 {Object.entries(specials).map(
                   ([dayOfWeek, { dishId, price }]) => (
                     <tr
@@ -271,7 +270,7 @@ const DailySpecialsPage = () => {
                         {editing === dayOfWeek ? (
                           <button
                             onClick={() => handleConfirmClick(dayOfWeek)}
-                            className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                            className="bg-green-500 text-white active:bg-green-600 font-inter uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                             type="button"
                             style={{ transition: "all .15s ease" }}
                           >
@@ -280,7 +279,7 @@ const DailySpecialsPage = () => {
                         ) : (
                           <button
                             onClick={() => handleEditClick(dayOfWeek)}
-                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                            className="bg-primary text-white hover:bg-orange-500 active:bg-orange-500 font-inter uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                             type="button"
                             style={{ transition: "all .15s ease" }}
                           >
@@ -301,10 +300,9 @@ const DailySpecialsPage = () => {
 
   return (
     <div className="container min-h-screen mx-auto mt-20 p-4">
-      {" "}
-      <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg mt-4">
+      <div className="container mx-auto">
         {" "}
-        <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">
+        <h2 className="text-3xl font-semiinter text-center text-gray-700 mb-6">
           Manage Daily Specials for Your Restaurant
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -359,7 +357,7 @@ const DailySpecialsPage = () => {
           ))}
           <div className="text-center">
             <button
-              className="bg-blue-500 text-white font-bold uppercase text-lg px-6 py-3 rounded shadow-lg hover:bg-blue-600 focus:outline-none focus:shadow-outline mt-4"
+              className="bg-primary text-white font-inter uppercase text-lg px-6 py-3 rounded shadow-lg hover:bg-orange-500 focus:outline-none focus:shadow-outline mt-4"
               type="submit"
             >
               Save Specials

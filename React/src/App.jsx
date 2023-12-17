@@ -16,10 +16,9 @@ import ApplyPage from "./features/User/ApplyPage";
 import DeliveryDashboard from "./features/DeliveryGuy.jsx/DeliveryDashboard";
 import EditResto from "../src/features/adminChef/EditResto";
 import AddDish from "./features/adminChef/AddDish";
-import EditDish from "./components/delivery/EditDish";
 import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
 import MenuPage from "./features/adminChef/MenuPage";
-
+import EditDishPage from "./features/dailySpecials/EditDishPage";
 function App() {
   return (
     <BrowserRouter>
@@ -105,8 +104,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/edit-dish/:dishId" element={<EditDish />} />
-
         <Route
           path="/restaurant-details/:id"
           element={
@@ -130,6 +127,14 @@ function App() {
           element={
             <ProtectedRoute role="Owner">
               <DisplayDailySpecials />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-dish/:dishId"
+          element={
+            <ProtectedRoute role="Owner">
+              <EditDishPage />
             </ProtectedRoute>
           }
         />
