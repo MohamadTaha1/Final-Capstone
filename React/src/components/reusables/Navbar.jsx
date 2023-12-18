@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav className="bg-white fixed w-full z-10 top-0 shadow-md">
       <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a href="/" className="flex items-center">
+          <a href="/home" className="flex items-center">
             <span className="font-edu-tas px-1 text-2xl tracking-tight text-primary">
               Maida
             </span>
