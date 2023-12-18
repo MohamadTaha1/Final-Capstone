@@ -13,7 +13,7 @@ import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
 import ApplyPage from "./features/User/ApplyPage";
-import DeliveryDashboard from "./features/DeliveryGuy.jsx/DeliveryDashboard";
+import DeliveryDashboard from "./features/DeliveryGuy/DeliveryDashboard";
 import EditResto from "../src/features/adminChef/EditResto";
 import AddDish from "./features/adminChef/AddDish";
 import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
