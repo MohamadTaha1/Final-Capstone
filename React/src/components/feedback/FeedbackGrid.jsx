@@ -1,4 +1,3 @@
-// FeedbackGrid.js
 import { useState, useEffect } from "react";
 
 const FeedbackGrid = () => {
