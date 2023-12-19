@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
   const [dishes, setDishes] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -54,12 +54,9 @@ const OrderDetails = () => {
       })
       .finally(() => setLoading(false));
   }, []);
-
-  const handleDeliveredClick = (orderId) => {
-    console.log("Delivered button clicked for order", orderId);
-    
+  const handleDeliveredClick = () => {
+    navigate(`/feedback`);
   };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -79,6 +76,7 @@ const OrderDetails = () => {
             </h2>
             <p className="text-text mb-2">Total Price: ${order.total_price}</p>
             <p className="text-text mb-2">Status: {order.status}</p>
+
             {order.restaurant && (
               <p className="text-text mb-4">
                 Restaurant: {order.restaurant.name}
@@ -102,16 +100,15 @@ const OrderDetails = () => {
                   </li>
                 ))}
               </ul>
+              {order.status.toLowerCase() === "delivered" && (
+                <button
+                  onClick={() => handleDeliveredClick(order.id)}
+                  className="bg-primary hover:bg-orange-500 text-white font-inter py-2 px-4 my-2 rounded"
+                >
+                  Provide feedback!
+                </button>
+              )}
             </div>
-            {order.status === "Delivered" && (
-              
-              <button
-                onClick={() => handleDeliveredClick(order.id)}
-                className="bg-primary hover:bg-orange-500 text-white font-inter py-2 px-4 my-2 rounded"
-              >
-                Provide feedback !
-              </button>
-            )}
           </div>
         ))
       ) : (

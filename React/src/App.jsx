@@ -62,6 +62,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/feedback"
+          element={
+            <ProtectedRoute role="Customer">
+              <FeedbackPage />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Protected routes for owners */}
         <Route
@@ -110,14 +118,6 @@ function App() {
           element={
             <ProtectedRoute role="Customer">
               <RestaurantDisplay />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/order/:id"
-          element={
-            <ProtectedRoute role="Customer">
-              <FeedbackPage />
             </ProtectedRoute>
           }
         />
