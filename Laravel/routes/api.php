@@ -13,9 +13,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\DailySpecialController;
-
-
-
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +25,8 @@ use App\Http\Controllers\DailySpecialController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -45,7 +45,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dishes', [DishController::class, 'index']); // List all dishes
     Route::get('/dishes/{id}', [DishController::class, 'show']); // Get a single dish
+    Route::post('/submitReview', [RatingController::class, 'submitReview']);
 });
+Route::get('/feedbacks', [RatingController::class, 'getFeedbacks']);
 
 // Protected Dish Routes for Restaurant Owners
 Route::middleware(['auth:sanctum', 'isOwner'])->group(function () {

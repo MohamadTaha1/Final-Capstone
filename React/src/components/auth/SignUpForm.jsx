@@ -8,11 +8,12 @@ const SignUpForm = () => {
   const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [userRole, setUserRole] = useState("customer"); // Default to 'customer'
+  const [userRole, setUserRole] = useState("Customer"); // Default to 'customer'
 
   const navigate = useNavigate(); // Hook for navigation
 
   const handleSubmit = async (event) => {
+    console.log("Form submitted");
     event.preventDefault();
 
     const response = await fetch("http://localhost:8000/api/register", {
@@ -36,8 +37,15 @@ const SignUpForm = () => {
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("role", data.user.role);
 
-      // Check the user's role and navigate accordingly
-      navigate("/home"); // Navigate to landing page on success
+        if(data.user.role === "Customer"){
+        navigate("/home");
+        } else if(data.user.role === "Owner") {
+          navigate("/owner");
+        } else if(data.user.role === "Delivery") {
+            navigate("/delivery");
+          }
+    
+      // Navigate to landing page on success
     } else {
       const errorData = await response.json();
       console.error("Registration failed:", errorData);
@@ -128,9 +136,9 @@ const SignUpForm = () => {
               <label>
                 <input
                   type="radio"
-                  value="owner"
+                  value="Owner"
                   className="m-2"
-                  checked={userRole === "owner"}
+                  checked={userRole === "Owner"}
                   onChange={(e) => setUserRole(e.target.value)}
                 />
                 Owner
@@ -138,9 +146,9 @@ const SignUpForm = () => {
               <label>
                 <input
                   type="radio"
-                  value="customer"
+                  value="Customer"
                   className="m-2"
-                  checked={userRole === "customer"}
+                  checked={userRole === "Customer"}
                   onChange={(e) => setUserRole(e.target.value)}
                 />
                 Customer
@@ -148,9 +156,9 @@ const SignUpForm = () => {
               <label>
                 <input
                   type="radio"
-                  value="delivery"
+                  value="Delivery"
                   className="m-2"
-                  checked={userRole === "delivery"}
+                  checked={userRole === "Delivery"}
                   onChange={(e) => setUserRole(e.target.value)}
                 />
                 Delivery

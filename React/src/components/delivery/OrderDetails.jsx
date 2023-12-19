@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const OrderDetails = () => {
   const [orders, setOrders] = useState([]);
   const [dishes, setDishes] = useState({});
@@ -54,8 +55,8 @@ const OrderDetails = () => {
       })
       .finally(() => setLoading(false));
   }, []);
-  const handleDeliveredClick = () => {
-    navigate(`/feedback`);
+  const handleDeliveredClick = (orderId) => {
+    navigate(`/feedback/${orderId}`); // Navigate to feedback page with orderId as a URL parameter
   };
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

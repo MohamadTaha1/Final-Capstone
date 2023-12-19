@@ -1,32 +1,45 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const OrderFeedback = () => {
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
+  const { orderId } = useParams();  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = "http://localhost:8000/api/#";
+    const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/"); // Redirect to login if no token is found
+        return;
+      }
+    const endpoint = "http://localhost:8000/api/submitReview";
 
     try {
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ description }),
+        body: JSON.stringify({ review_text: description, order_id: orderId }), 
       });
+      console.log("Sending POST request to:", endpoint);
+      console.log("Request payload:", JSON.stringify({ review_text: description, order_id: orderId }));
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const errorText = await response.text();
+        console.error("Error response text:", errorText);
       }
-
+      alert("Your review was successfully sent!");
+      
       navigate("/home");
     } catch (error) {
       console.error("Error submitting description:", error);
     }
   };
+
+  // ... rest of the component
 
   return (
     <div className="flex bg-neutral-100 mt-16 min-h-screen">

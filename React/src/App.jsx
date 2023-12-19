@@ -19,10 +19,6 @@ import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
 import MenuPage from "./features/adminChef/MenuPage";
 import EditDishPage from "./features/dailySpecials/EditDishPage";
 import FeedbackPage from "./features/User/FeedbackPage";
-import ApplyPage from "./features/User/ApplyPage";
-import EditDish from "./components/delivery/EditDish";
-import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
-
 function App() {
   return (
     <BrowserRouter>
@@ -67,13 +63,14 @@ function App() {
           }
         />
         <Route
-          path="/feedback"
+          path="/feedback/:orderId"
           element={
             <ProtectedRoute role="Customer">
               <FeedbackPage />
             </ProtectedRoute>
           }
         />
+
 
         {/* Protected routes for owners */}
         <Route
@@ -122,6 +119,23 @@ function App() {
           element={
             <ProtectedRoute role="Customer">
               <RestaurantDisplay />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dailys"
+          element={
+            <ProtectedRoute role="Owner">
+              <DisplayDailySpecials />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-dish/:dishId"
+          element={
+            <ProtectedRoute role="Owner">
+              <EditDishPage />
             </ProtectedRoute>
           }
         />
