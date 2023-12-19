@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 const RestaurantGrid = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [initialRestaurants, setInitialRestaurants] = useState([]); // New state to store the initial restaurants
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8000/api/restaurants")
       .then((response) => response.json())
-      .then((data) => setRestaurants(data))
+      .then((data) => {
+        setRestaurants(data);
+        setInitialRestaurants(data); // Set initial restaurants
+      })
       .catch((error) => console.error("Error fetching restaurants:", error));
   }, []);
 
@@ -28,6 +32,11 @@ const RestaurantGrid = () => {
     setRestaurants(filteredRestaurants);
   };
 
+  const handleReset = () => {
+    setRestaurants(initialRestaurants); // Reset to initial state
+    setSearchTerm(""); // Clear the search term
+  };
+
   return (
     <div className="container min-h-screen mx-auto p-4">
       <div className="search-container mx-auto text-center">
@@ -43,6 +52,12 @@ const RestaurantGrid = () => {
           className="search-button ml-2 bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
         >
           Search
+        </button>
+        <button
+          onClick={handleReset}
+          className="reset-button ml-2 bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        >
+          Reset
         </button>
       </div>
 
@@ -74,7 +89,6 @@ const RestaurantGrid = () => {
           </div>
         ))}
       </div>
-      
     </div>
   );
 };

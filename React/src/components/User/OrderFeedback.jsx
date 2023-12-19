@@ -39,7 +39,6 @@ const OrderFeedback = () => {
     }
   };
 
-  // ... rest of the component
 
   return (
     <div className="flex bg-neutral-100 mt-16 min-h-screen">
