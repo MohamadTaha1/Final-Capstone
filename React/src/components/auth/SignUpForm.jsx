@@ -5,6 +5,8 @@ import PrimaryButton from "../reusables/PrimaryButton";
 const SignUpForm = () => {
   const [name, setUsername] = useState(""); // Changed from username to name
   const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
+
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState(""); // Added password confirmation
 
@@ -21,6 +23,7 @@ const SignUpForm = () => {
       body: JSON.stringify({
         name,
         email,
+        location,
         password,
         password_confirmation: passwordConfirmation,
       }), // Adjusted to match Laravel's expected fields
@@ -73,6 +76,18 @@ const SignUpForm = () => {
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <input
+                id="location"
+                type="location"
+                name="location"
+                className="w-full p-2 font-inter border border-gray-200 rounded-md focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-300"
+                placeholder="Location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 required
               />
             </div>
