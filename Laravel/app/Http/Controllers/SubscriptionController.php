@@ -1,52 +1,67 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Subscription;
-use App\Models\DailySpecial;
 use Illuminate\Http\Request;
+use App\Models\Subscription;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class SubscriptionController extends Controller
 {
-    public function viewSpecials()
-    {
-        $specials = DailySpecial::all();
-        return response()->json($specials);
-    }
-
-
     public function subscribe(Request $request)
     {
+        Log::info('Subscribe request received', ['request' => $request->all()]);
+
         $validatedData = $request->validate([
-            'daily_special_id' => 'required|exists:daily_specials,id',
-            // Additional validation fields if necessary
+            'restaurantId' => 'required|exists:restaurants,id',
+            'planType' => 'required|string',
         ]);
 
+        $startDate = Carbon::now();
+        $endDate = $this->calculateEndDate($validatedData['planType'], $startDate);
+
         $subscription = Subscription::create([
-            'user_id' => auth()->id(),
-            'daily_special_id' => $validatedData['daily_special_id'],
-            // Other fields as required
+            'user_id' => Auth::id(),
+            'restaurant_id' => $validatedData['restaurantId'],
+            'subscription_type' => $validatedData['planType'],
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            // other fields as needed
         ]);
+
+        Log::info('Subscription created', ['subscription' => $subscription]);
 
         return response()->json($subscription, 201);
     }
 
-
-    public function userSubscriptions()
+    private function calculateEndDate($planType, $startDate)
     {
-        $userId = auth()->id();
-        $subscriptions = Subscription::where('user_id', $userId)->get();
-        return response()->json($subscriptions);
+        if ($planType == 'Basic Plan') {
+            return $startDate->copy()->addDays(7);
+        } else if ($planType == 'Premium Plan') {
+            return $startDate->copy()->addDays(30);
+        }
+
+        // Fallback if plan type doesn't match
+        return $startDate->copy()->addDays(30); // Default to 30 days
     }
 
+    public function getUserSubscriptionDetails()
+{
+    $userId = Auth::id(); // Get the logged-in user's ID
+    $subscription = Subscription::with('restaurant')
+                                ->where('user_id', $userId)
+                                ->latest()
+                                ->first();
 
-    public function unsubscribe($id)
-    {
-        $subscription = Subscription::where('id', $id)
-                                     ->where('user_id', auth()->id())
-                                     ->firstOrFail();
-        $subscription->delete();
-        return response()->json(['message' => 'Unsubscribed successfully']);
+    if (!$subscription) {
+        return response()->json(['message' => 'No subscription found'], 404);
     }
 
+    return response()->json($subscription);
+}
+
+
+    // ... other methods
 }

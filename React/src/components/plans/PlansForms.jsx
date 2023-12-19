@@ -1,5 +1,28 @@
+import axios from 'axios';
+
+
 const PlansForms = () => {
-  // Example subscription plans
+  const selectedRestaurantId = localStorage.getItem('selectedRestaurantId');
+  const token = localStorage.getItem('token');
+
+  const handleSubscription = (planType) => {
+    axios.post('http://localhost:8000/api/subscribe', {
+      restaurantId: selectedRestaurantId, 
+      planType  // This should be either "Basic Plan" or "Premium Plan"
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then(response => {
+      console.log('Subscription successful:', response.data);
+      // Additional success handling
+    }).catch(error => {
+      console.error('Error in subscription:', error);
+      // Additional error handling
+    });
+  };
+  
+
   const plans = [
     {
       title: "Basic Plan",
@@ -7,7 +30,6 @@ const PlansForms = () => {
         "Access to basic features",
         "Up to 10 orders per month",
         "Email support",
-        // Add more features as needed
       ],
     },
     {
@@ -16,7 +38,6 @@ const PlansForms = () => {
         "Access to all features",
         "Unlimited orders",
         "Priority support",
-        // Add more features as needed
       ],
     },
   ];
@@ -41,14 +62,13 @@ const PlansForms = () => {
                 ))}
               </ul>
             </div>
-            <br></br>
             <div className="flex justify-center">
-              <a
-                href="/subscribe" // Change to your checkout page's URL
-                className="inline-block bg-primary text-white py-2 px-4 rounded-lg cursor-pointer hover:bg-primary-dark transition-colors" // Add your button styles here
+              <button
+                onClick={() => handleSubscription(plan.title)}
+                className="inline-block bg-primary text-white py-2 px-4 rounded-lg cursor-pointer hover:bg-primary-dark transition-colors"
               >
-                Subscribe
-              </a>
+                Subscribe to {plan.title}
+              </button>
             </div>
           </div>
         ))}
