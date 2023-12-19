@@ -75,7 +75,7 @@ const RestaurantDetails = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container min-h-screen mx-auto p-4">
       {/* Hero Section */}
       <div className="hero-section mt-12">
         <img
@@ -85,10 +85,12 @@ const RestaurantDetails = () => {
         />
         <h1 className="text-5xl font-inter text-center my-4 text-text">
           {" "}
+          {restaurant.id}
+          {" : "}
           {restaurant.name}
         </h1>
       </div>
-      <p className="text-xl text-center my-2 text-text">
+      <p className="text-2xl font-edu-tas text-center my-2 text-text">
         {" "}
         {restaurant.description}
       </p>
@@ -138,52 +140,59 @@ const RestaurantDetails = () => {
       {/* Menu Section */}
       <div className="mt-6">
         <h2 className="text-3xl font-inter text-text mb-4"> Menu</h2>
-        {restaurant.menus.map((menu) =>
-          menu.dishes.map((dish) => (
-            <div
-              key={dish.id}
-              className="dish-card bg-white p-4 rounded-lg mb-4 shadow-md flex justify-between items-center" // Added padding, rounded corners, and shadow for card
-            >
-              <div className="flex items-center">
-                <img
-                  src={dish.image}
-                  alt={dish.name}
-                  className="h-44 w-44 rounded-4 mr-6"
-                />
-                <div className="flex flex-col justify-between">
-                  <h3 className="text-lg font-semibold text-text mb-1">
-                    {" "}
-                    {dish.name}
-                  </h3>
-                  <p className="text-text mb-1"> {dish.description}</p>
-                  <p className="text-text2 font-semibold">
-                    {" "}
-                    Price: ${dish.price}
-                  </p>
+        {restaurant.menus.length === 0 ||
+        restaurant.menus.every((menu) => menu.dishes.length === 0) ? (
+          <p className="text-center text-2xl text-text font-edu-tas p-24">
+            Maida is still empty here!
+          </p>
+        ) : (
+          restaurant.menus.map((menu) =>
+            menu.dishes.map((dish) => (
+              <div
+                key={dish.id}
+                className="dish-card bg-white p-4 rounded-lg mb-4 shadow-md flex justify-between items-center" // Added padding, rounded corners, and shadow for card
+              >
+                <div className="flex items-center">
+                  <img
+                    src={dish.image}
+                    alt={dish.name}
+                    className="h-44 w-44 rounded-4 mr-6"
+                  />
+                  <div className="flex flex-col justify-between">
+                    <h3 className="text-lg font-semibold text-text mb-1">
+                      {" "}
+                      {dish.name}
+                    </h3>
+                    <p className="text-text mb-1"> {dish.description}</p>
+                    <p className="text-text2 font-semibold">
+                      {" "}
+                      Price: ${dish.price}
+                    </p>
+                  </div>
+                </div>
+                <div className="quantity-selector flex items-center">
+                  <button
+                    onClick={() => handleQuantityChange(dish.id, -1)}
+                    className="bg-gray-200 text-text hover:bg-gray-300 p-2 rounded-l-md"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    className="w-12 text-center border-none" // Removed border for a cleaner look
+                    value={dishQuantities[dish.id]}
+                    readOnly
+                  />
+                  <button
+                    onClick={() => handleQuantityChange(dish.id, 1)}
+                    className="bg-gray-200 text-text hover:bg-gray-300 p-2 rounded-r-md"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
-              <div className="quantity-selector flex items-center">
-                <button
-                  onClick={() => handleQuantityChange(dish.id, -1)}
-                  className="bg-gray-200 text-text hover:bg-gray-300 p-2 rounded-l-md"
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  className="w-12 text-center border-none" // Removed border for a cleaner look
-                  value={dishQuantities[dish.id]}
-                  readOnly
-                />
-                <button
-                  onClick={() => handleQuantityChange(dish.id, 1)}
-                  className="bg-gray-200 text-text hover:bg-gray-300 p-2 rounded-r-md"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-          ))
+            ))
+          )
         )}
       </div>
       <div className="mt-6 text-center">

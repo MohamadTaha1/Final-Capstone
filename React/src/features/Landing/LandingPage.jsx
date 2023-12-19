@@ -1,3 +1,4 @@
+import FeedbackGrid from "../../components/feedback/FeedbackGrid";
 import RestaurantGrid from "../../components/restaurant/RestaurantGrid";
 import Footer from "../../components/reusables/Footer";
 import Navbar from "../../components/reusables/Navbar";
@@ -8,7 +9,8 @@ const LandingPage = () => {
       <Navbar />
       <Header />
       <RestaurantGrid />
-      <Footer/>
+      <FeedbackGrid />
+      <Footer />
     </>
   );
 };

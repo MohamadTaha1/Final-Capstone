@@ -18,27 +18,34 @@ const RestaurantGrid = () => {
   };
 
   const handleSearch = () => {
-    // logic for taha
-    const filteredRestaurants = restaurants.filter((restaurant) =>
-      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const searchTermLower = searchTerm.toLowerCase();
+    const filteredRestaurants = restaurants.filter(
+      (restaurant) =>
+        restaurant.name.toLowerCase().includes(searchTermLower) ||
+        restaurant.description.toLowerCase().includes(searchTermLower) ||
+        restaurant.id.toString().includes(searchTermLower)
     );
     setRestaurants(filteredRestaurants);
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="search-container">
+    <div className="container min-h-screen mx-auto p-4">
+      <div className="search-container mx-auto text-center">
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search Restaurants"
-          className="search-input"
+          placeholder="Search by Name, Description, or ID"
+          className="search-input w-80 mt-4 mb-4 px-4 py-2 border rounded shadow"
         />
-        <button onClick={handleSearch} className="search-button">
+        <button
+          onClick={handleSearch}
+          className="search-button ml-2 bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        >
           Search
         </button>
       </div>
+
       <div className=" font-inter font-semibold text-2xl p-6 whitespace-nowrap text-primary group transition duration-300 inline-block">
         Explore Restaurants
         <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-500"></span>
@@ -67,10 +74,7 @@ const RestaurantGrid = () => {
           </div>
         ))}
       </div>
-      <div className=" font-inter font-semibold text-2xl p-6 whitespace-nowrap text-primary group transition duration-300 inline-block">
-        Customer Feedback
-        <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-500"></span>
-      </div>
+      
     </div>
   );
 };

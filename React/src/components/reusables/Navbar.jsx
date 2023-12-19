@@ -10,14 +10,14 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    navigate("/login"); // Redirect to login page after logout
+    navigate("/"); // Redirect to login page after logout
   };
 
   return (
     <nav className="bg-white fixed w-full z-10 top-0 shadow-md">
       <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a href="/" className="flex items-center">
+          <a href="/home" className="flex items-center">
             <span className="font-edu-tas px-1 text-2xl tracking-tight text-primary">
               Maida
             </span>
@@ -41,12 +41,6 @@ const Navbar = () => {
             {/* Navigation Links */}
             <div className="px-8 py-2 md:flex md:space-x-4">
               <a
-                href="/plans"
-                className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
-              >
-                Plans
-              </a>
-              <a
                 href="/orders"
                 className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
               >
@@ -68,7 +62,7 @@ const Navbar = () => {
                 onClick={handleLogout}
                 className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:text-gray-900 hover:bg-gray-50 md:hover:bg-transparent"
               >
-                Logout
+                Log out
               </button>
             </div>
           </div>

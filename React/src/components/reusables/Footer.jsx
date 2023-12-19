@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="p-4 bg-white sm:p-6 text-primary border-t">
       <div className="md:flex md:justify-between">
         <div className="mb-6 md:mb-0">
-          <Link to="/" className="flex items-center">
+          <Link to="#" className="flex items-center">
             <span className="self-center text-3xl font-edu-tas whitespace-nowrap">
               Maida
             </span>
@@ -19,7 +19,7 @@ const Footer = () => {
             <ul className="text-gray-600 dark:text-gray-400">
               <li className="mb-4">
                 <Link
-                  to={"/"}
+                  to={"#"}
                   className=" whitespace-nowrap text-gray-500 group transition duration-300 inline-block"
                 >
                   Maida
@@ -28,7 +28,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to={"/"}
+                  to={"#"}
                   className="self-center whitespace-nowrap text-gray-500 group transition duration-300 inline-block"
                 >
                   LAU
@@ -44,7 +44,7 @@ const Footer = () => {
             <ul className="text-gray-600 dark:text-gray-400">
               <li className="mb-4">
                 <Link
-                  to={"/"}
+                  to={"#"}
                   className="self-center whitespace-nowrap text-gray-500 group transition duration-300 inline-block"
                 >
                   Our Mission
@@ -53,7 +53,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to={"/"}
+                  to={"#"}
                   className="self-center whitespace-nowrap text-gray-500 group transition duration-300 inline-block"
                 >
                   Who we are
@@ -67,7 +67,7 @@ const Footer = () => {
             <ul className="text-gray-600 dark:text-gray-400">
               <li className="mb-4">
                 <Link
-                  to={"/"}
+                  to={"#"}
                   className="self-center whitespace-nowrap text-gray-500 group transition duration-300 inline-block"
                 >
                   Privacy Policy
@@ -76,7 +76,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to={"/"}
+                  to={"#"}
                   className="self-center whitespace-nowrap text-gray-500 group transition duration-300 inline-block"
                 >
                   Terms & Conditions
@@ -91,7 +91,7 @@ const Footer = () => {
       <div className="sm:flex sm:items-center sm:justify-between">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2023{" "}
-          <Link to="/" className="hover:underline">
+          <Link to="#" className="hover:underline">
             Maida™
           </Link>
           . All Rights Reserved.

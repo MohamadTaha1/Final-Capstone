@@ -4,32 +4,34 @@ import LogIn from "./features/auth/LogIn";
 import SignUp from "./features/auth/SignUp";
 import ProfilePage from "./features/User/ProfilePage";
 import Checkout from "./features/checkout/Checkout";
-import Main from "./features/adminChef/Main";
+import ChefDashboard from "./features/adminChef/ChefDashboard";
 import RestaurantDetail from "./components/restaurant/RestaurantDetail";
-import EditRestaurant from "./components/restaurant/EditRestaurant";
 import { ProtectedRoute } from "./components/auth/UseAuth";
 import RestaurantDisplay from "./features/restaurant/RestaurantDisplay";
 import OrderPage from "./features/delivery/OrdersPage";
-import Delivery from "./features/delivery/DeliveryOrders";
 import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
+import DeliveryDashboard from "./features/DeliveryGuy/DeliveryDashboard";
+import EditResto from "../src/features/adminChef/EditResto";
+import AddDish from "./features/adminChef/AddDish";
+import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
+import MenuPage from "./features/adminChef/MenuPage";
+import EditDishPage from "./features/dailySpecials/EditDishPage";
+import FeedbackPage from "./features/User/FeedbackPage";
 import ApplyPage from "./features/User/ApplyPage";
 import EditDish from "./components/delivery/EditDish";
 import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
-
-// ...
-
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/" element={<LogIn />} />
         <Route path="/plans" element={<PlansPage />} />
         <Route path="/subscribe" element={<SubscribePage />} />
+        <Route path="/home" element={<LandingPage />} />
 
         {/* Protected routes for customers */}
         <Route
@@ -41,7 +43,7 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path="/home"
           element={
             <ProtectedRoute role="Customer">
               <LandingPage />
@@ -65,20 +67,36 @@ function App() {
           }
         />
         <Route
-          path="/apply"
+          path="/feedback"
           element={
             <ProtectedRoute role="Customer">
-              <ApplyPage />
+              <FeedbackPage />
             </ProtectedRoute>
           }
         />
 
         {/* Protected routes for owners */}
         <Route
-          path="/main"
+          path="/owner"
           element={
             <ProtectedRoute role="Owner">
-              <Main />
+              <ChefDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dish"
+          element={
+            <ProtectedRoute role="Owner">
+              <AddDish />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            <ProtectedRoute role="Owner">
+              <MenuPage />
             </ProtectedRoute>
           }
         />
@@ -86,12 +104,10 @@ function App() {
           path="/edit-restaurant/:id"
           element={
             <ProtectedRoute role="Owner">
-              <EditRestaurant />
+              <EditResto />
             </ProtectedRoute>
           }
         />
-        <Route path="/edit-dish/:dishId" element={<EditDish />} />
-
         <Route
           path="/restaurant-details/:id"
           element={
@@ -109,15 +125,9 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/dailys" element={
-          <ProtectedRoute role="Owner">
-            <DisplayDailySpecials />
-          </ProtectedRoute>
-        } />
         {/* Add other routes as needed */}
 
-        <Route path="/delivery" element={<Delivery />} />
+        <Route path="/delivery" element={<DeliveryDashboard />} />
       </Routes>
     </BrowserRouter>
   );

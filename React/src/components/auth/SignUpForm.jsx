@@ -3,22 +3,31 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PrimaryButton from "../reusables/PrimaryButton";
 
 const SignUpForm = () => {
-  const [name, setUsername] = useState(""); // Changed from username to name
+  const [name, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [location, setLocation] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState(""); // Added password confirmation
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [userRole, setUserRole] = useState("customer"); // Default to 'customer'
 
   const navigate = useNavigate(); // Hook for navigation
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch('http://localhost:8000/api/register', {
+    const response = await fetch("http://localhost:8000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, password_confirmation: passwordConfirmation }), // Adjusted to match Laravel's expected fields
+      body: JSON.stringify({
+        name,
+        email,
+        location,
+        password,
+        password_confirmation: passwordConfirmation,
+        role: userRole,
+      }), // Adjusted to match Laravel's expected fields
     });
 
     if (response.ok) {
@@ -28,7 +37,7 @@ const SignUpForm = () => {
       localStorage.setItem("role", data.user.role);
 
       // Check the user's role and navigate accordingly
-      navigate('/'); // Navigate to landing page on success
+      navigate("/home"); // Navigate to landing page on success
     } else {
       const errorData = await response.json();
       console.error("Registration failed:", errorData);
@@ -43,23 +52,24 @@ const SignUpForm = () => {
     <div className="flex min-h-screen bg-neutral-100">
       <div className="m-auto max-w-lg w-full">
         <div className="bg-white p-8 rounded-xl shadow-lg shadow-zinc-300">
-          <h2 className="text-3xl font-inter mb-6 text-gray-700 text-center">
+          <h2 className="text-3xl font-inter mb-6 text-text2 text-center">
             Sign Up
           </h2>
+          <hr className="m-6" />
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="mx-6 my-4">
               <input
                 id="name"
                 type="text"
                 name="Name"
                 className="w-full p-2 font-inter border border-gray-200 rounded-md focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-300"
-                placeholder="name"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="mx-6 my-4">
               <input
                 id="email"
                 type="email"
@@ -71,7 +81,19 @@ const SignUpForm = () => {
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="mx-6 my-4">
+              <input
+                id="location"
+                type="location"
+                name="location"
+                className="w-full p-2 font-inter border border-gray-200 rounded-md focus:outline-none focus:border-gray-200 focus:ring-1 focus:ring-gray-300"
+                placeholder="Location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mx-6 my-4">
               <input
                 id="password"
                 type="password"
@@ -83,7 +105,7 @@ const SignUpForm = () => {
                 required
               />
             </div>
-            <div className="mb-4">
+            <div className="mx-6 my-4">
               <input
                 id="passwordConfirmation"
                 type="password"
@@ -95,16 +117,52 @@ const SignUpForm = () => {
                 required
               />
             </div>
+
+            <div className="mb-4">
+              {/* Radio buttons for selecting user role */}
+              <div>
+                <h2 className="text-lg mx-6 my-2 font-edu-tas text-primary">
+                  Please select your role :{" "}
+                </h2>
+              </div>
+              <label>
+                <input
+                  type="radio"
+                  value="owner"
+                  className="m-2"
+                  checked={userRole === "owner"}
+                  onChange={(e) => setUserRole(e.target.value)}
+                />
+                Owner
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="customer"
+                  className="m-2"
+                  checked={userRole === "customer"}
+                  onChange={(e) => setUserRole(e.target.value)}
+                />
+                Customer
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="delivery"
+                  className="m-2"
+                  checked={userRole === "delivery"}
+                  onChange={(e) => setUserRole(e.target.value)}
+                />
+                Delivery
+              </label>
+            </div>
             <div className="text-center mb-4">
               <PrimaryButton>Sign Up</PrimaryButton>
             </div>
           </form>
-          <div className="text-center font-inter text-gray-700">
+          <div className="text-center font-inter text-text2">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-primary font-inter hover:underline"
-            >
+            <a href="/" className="text-primary font-inter hover:underline">
               Login
             </a>
           </div>

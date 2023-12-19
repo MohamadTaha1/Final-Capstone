@@ -1,27 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
+
 
 
 const PlansForms = () => {
-  const selectedRestaurantId = localStorage.getItem('selectedRestaurantId');
-  const token = localStorage.getItem('token');
+  const selectedRestaurantId = localStorage.getItem("selectedRestaurantId");
+  const token = localStorage.getItem("token");
 
   const handleSubscription = (planType) => {
-    axios.post('http://localhost:8000/api/subscribe', {
-      restaurantId: selectedRestaurantId, 
-      planType  // This should be either "Basic Plan" or "Premium Plan"
-    }, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    }).then(response => {
-      console.log('Subscription successful:', response.data);
-      // Additional success handling
-    }).catch(error => {
-      console.error('Error in subscription:', error);
-      // Additional error handling
-    });
+    axios
+      .post(
+        "http://localhost:8000/api/subscribe",
+        {
+          restaurantId: selectedRestaurantId,
+          planType, // This should be either "Basic Plan" or "Premium Plan"
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Subscription successful:", response.data);
+        // Additional success handling
+      })
+      .catch((error) => {
+        console.error("Error in subscription:", error);
+        // Additional error handling
+      });
   };
-  
 
   const plans = [
     {
@@ -65,7 +72,7 @@ const PlansForms = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => handleSubscription(plan.title)}
-                className="inline-block bg-primary text-white py-2 px-4 rounded-lg cursor-pointer hover:bg-primary-dark transition-colors"
+                className="inline-block mt-4 bg-primary text-white py-2 px-4 rounded-lg cursor-pointer hover:bg-primary-dark transition-colors"
               >
                 Subscribe to {plan.title}
               </button>

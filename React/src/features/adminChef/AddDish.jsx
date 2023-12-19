@@ -1,15 +1,15 @@
-import DailySpecialsPage from "../../components/plans/DailySpecials";
 import AdminNav from "../../components/AdminComponents/AdminNav";
+import DishForm from "../../components/AdminComponents/DishForm";
 import Footer from "../../components/reusables/Footer";
 
-const DisplayDailySpecials = () => {
+const AddDish = () => {
   return (
     <>
       <AdminNav />
-      <DailySpecialsPage />
+      <DishForm />
       <Footer />
     </>
   );
 };
 
-export default DisplayDailySpecials;
+export default AddDish;
