@@ -104,7 +104,6 @@ const DeliveryOrders = () => {
 
   const markOrderAsDelivered = async (id) => {
     try {
-      console.log(id);
       const response = await fetch(
         `http://localhost:8000/api/delivery/mark-delivered/${id}`,
         {
@@ -115,16 +114,24 @@ const DeliveryOrders = () => {
           },
         }
       );
-
+  
       if (!response.ok) {
         throw new Error("Failed to mark order as delivered");
       }
-
-      // Refresh data or handle success
+  
+      // Move the delivered order from current to past orders
+      const deliveredOrder = { ...currentOrder }; // Clone current order
+      setPastOrders([...pastOrders, deliveredOrder]); // Add to past orders
+      setCurrentOrder(null); // Clear current order
+  
+      // Optionally, refresh the data
+      // fetchAssignedOrder();
+      // fetchPastDeliveredOrders();
     } catch (error) {
       console.error("Error marking order as delivered:", error);
     }
   };
+  
 
   return (
     <div className="container min-h-screen mx-auto mt-20 p-4">
@@ -137,19 +144,15 @@ const DeliveryOrders = () => {
         >
           {isAvailable ? "Mark as Unavailable" : "Mark as Available"}
         </button>
-
+  
         <div className="mt-8">
-          <h1 className="text-xl font-bold text-text2 mb-4">
-            Current Order
-          </h1>
+          <h1 className="text-xl font-bold text-text2 mb-4">Current Order</h1>
           {currentOrder && currentOrder.id ? (
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <p className="text-gray-800 text-lg">
-                Order ID: {currentOrder.id}
-              </p>
-              <p className="text-gray-600">
-                Total Price: ${currentOrder.total_price}
-              </p>
+              <p className="text-gray-800 text-lg">Order ID: {currentOrder.id}</p>
+              <p className="text-gray-600">Total Price: ${currentOrder.total_price}</p>
+              <p className="text-gray-600">Delivery Address: {currentOrder.user.location}</p>
+              <p className="text-gray-600">Restaurant: {currentOrder.restaurant.name}</p>
               <button
                 onClick={() => markOrderAsDelivered(currentOrder.id)}
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
@@ -158,27 +161,20 @@ const DeliveryOrders = () => {
               </button>
             </div>
           ) : (
-            <p className="text-gray-600">
-              Nothing available to Deliver at the moment.
-            </p>
+            <p className="text-gray-600">Nothing available to deliver at the moment.</p>
           )}
         </div>
-
+  
         <div className="mt-8">
-          <h2 className="text-xl font-bold text-text2 mb-4">
-            Past Delivered Orders
-          </h2>
+          <h2 className="text-xl font-bold text-text2 mb-4">Past Delivered Orders</h2>
           <div className="space-y-4">
             {pastOrders.length > 0 ? (
               pastOrders.map((order) => (
-                <div
-                  key={order.id}
-                  className="bg-white p-4 rounded-lg shadow-md"
-                >
+                <div key={order.id} className="bg-white p-4 rounded-lg shadow-md">
                   <p className="text-gray-800">Order ID: {order.id}</p>
-                  <p className="text-gray-600">
-                    Total Price: ${order.total_price}
-                  </p>
+                  <p className="text-gray-600">Total Price: ${order.total_price}</p>
+                  <p className="text-gray-600">Delivered to: {order.user.location}</p>
+                  <p className="text-gray-600">Picked up from: {order.restaurant.name}</p>
                 </div>
               ))
             ) : (
@@ -189,6 +185,7 @@ const DeliveryOrders = () => {
       </div>
     </div>
   );
+  
 };
 
 export default DeliveryOrders;

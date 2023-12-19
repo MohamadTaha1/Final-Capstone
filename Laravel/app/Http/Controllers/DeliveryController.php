@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Restaurant;
 use App\Models\Dish;
 
+
 class DeliveryController extends Controller
 {
     /**
@@ -45,14 +46,21 @@ class DeliveryController extends Controller
         ]);
     }
 
+
     public function getCurrentAssignedOrder()
     {
-        $order = Order::where('delivery_user_id', Auth::id())
+        $order = Order::with(['restaurant', 'user'])
+                    ->where('delivery_user_id', Auth::id())
                     ->where('status', 'On the way')
                     ->first();
 
+        if (!$order) {
+            return response()->json(['message' => 'No current order assigned'], 404);
+        }
+
         return response()->json($order);
     }
+
 
     public function markOrderAsDelivered(Request $request, $id)
     {
@@ -73,11 +81,14 @@ class DeliveryController extends Controller
 
     public function getPastDeliveredOrders()
     {
-        $orders = Order::where('delivery_user_id', Auth::id())
+        $orders = Order::with(['restaurant', 'user'])
+                    ->where('delivery_user_id', Auth::id())
                     ->where('status', 'Delivered')
+                    ->orderBy('updated_at', 'desc') // Sorting by delivery time
                     ->get();
 
         return response()->json($orders);
     }
+
 }
 
