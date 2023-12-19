@@ -1,10 +1,12 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 
 const PlansForms = () => {
   const selectedRestaurantId = localStorage.getItem("selectedRestaurantId");
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const handleSubscription = (planType) => {
     axios
@@ -22,7 +24,7 @@ const PlansForms = () => {
       )
       .then((response) => {
         console.log("Subscription successful:", response.data);
-        // Additional success handling
+        navigate("/profile");
       })
       .catch((error) => {
         console.error("Error in subscription:", error);

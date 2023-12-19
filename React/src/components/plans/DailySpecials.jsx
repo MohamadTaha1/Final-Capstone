@@ -9,6 +9,9 @@ const DailySpecialsPage = () => {
   const token = localStorage.getItem("token");
   const [restaurantId, setRestaurantId] = useState(null);
   const [editing, setEditing] = useState(null);
+  const [activeSubscriptions, setActiveSubscriptions] = useState([]);
+
+
 
   useEffect(() => {
     const fetchOwnerRestaurants = async () => {
@@ -193,6 +196,27 @@ const DailySpecialsPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (restaurantId) {
+      fetchActiveSubscriptions();
+      fetchDailySpecials();
+    }
+  }, [restaurantId, token]);
+
+  const fetchActiveSubscriptions = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/owner/subscriptions",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setActiveSubscriptions(response.data.subscriptions);
+    } catch (error) {
+      console.error("Error fetching active subscriptions:", error);
+    }
+  };
+
   if (loading) {
     return <div className="text-center text-xl">Loading daily specials...</div>;
   }
@@ -294,6 +318,34 @@ const DailySpecialsPage = () => {
             </table>
           </div>
         </div>
+
+        <div>
+          <h2 className="text-2xl font-inter text-center mb-4 text-text2">
+            Active Subscriptions
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white shadow-md rounded-lg">
+              <thead className="bg-gray-200 text-text uppercase text-sm leading-normal">
+                <tr>
+                  <th className="py-3 px-6 text-left">User ID</th>
+                  <th className="py-3 px-6 text-center">Subscription Type</th>
+                  <th className="py-3 px-6 text-center">Start Date</th>
+                  <th className="py-3 px-6 text-center">End Date</th>
+                </tr>
+              </thead>
+              <tbody className="text-text text-sm font-light">
+                {activeSubscriptions.map((subscription, index) => (
+                  <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
+                    <td className="py-3 px-6 text-left">{subscription.user_id}</td>
+                    <td className="py-3 px-6 text-center">{subscription.subscription_type}</td>
+                    <td className="py-3 px-6 text-center">{subscription.start_date}</td>
+                    <td className="py-3 px-6 text-center">{subscription.end_date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>  
       </div>
     );
   }

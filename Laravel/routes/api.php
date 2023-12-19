@@ -98,6 +98,7 @@ Route::middleware(['auth:sanctum', 'isOwner'])->group(function () {
 Route::middleware(['auth:sanctum', 'isOwner'])->group(function () {
     Route::get('/restaurant/orders', [OrderController::class, 'getRestaurantOrders']);
     Route::post('/restaurant/orders/{id}/confirm', [OrderController::class, 'confirmOrder']);
+    Route::get('/owner/subscriptions', [SubscriptionController::class, 'getActiveSubscriptionsForOwner']);
 
 
 

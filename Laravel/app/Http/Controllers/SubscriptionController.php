@@ -6,6 +6,7 @@ use App\Models\Subscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\Models\Restaurant;
 
 class SubscriptionController extends Controller
 {
@@ -48,19 +49,39 @@ class SubscriptionController extends Controller
     }
 
     public function getUserSubscriptionDetails()
-{
-    $userId = Auth::id(); // Get the logged-in user's ID
-    $subscription = Subscription::with('restaurant')
-                                ->where('user_id', $userId)
-                                ->latest()
-                                ->first();
+    {
+        $userId = Auth::id(); // Get the logged-in user's ID
+        $subscription = Subscription::with('restaurant')
+                                    ->where('user_id', $userId)
+                                    ->latest()
+                                    ->first();
 
-    if (!$subscription) {
-        return response()->json(['message' => 'No subscription found'], 404);
+        if (!$subscription) {
+            return response()->json(['message' => 'No subscription found'], 404);
+        }
+
+        return response()->json($subscription);
     }
 
-    return response()->json($subscription);
-}
+public function getActiveSubscriptionsForOwner()
+    {
+        $ownerId = Auth::id(); // Get the logged-in owner's ID
+
+        // Assuming each owner has one restaurant, for simplicity
+        // If an owner can have multiple restaurants, you might need to adjust the query
+        $restaurantId = Restaurant::where('owner_id', $ownerId)->pluck('id')->first();
+
+        if (!$restaurantId) {
+            return response()->json(['message' => 'Restaurant not found for owner'], 404);
+        }
+
+        $subscriptions = Subscription::where('restaurant_id', $restaurantId)
+                                     ->where('end_date', '>', Carbon::now()) // Only active subscriptions
+                                     ->orderBy('start_date', 'asc') // Sorted by start date
+                                     ->get(['user_id', 'subscription_type', 'start_date', 'end_date']);
+
+        return response()->json(['subscriptions' => $subscriptions]);
+    }
 
 
     // ... other methods

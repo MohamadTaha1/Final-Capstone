@@ -5,12 +5,43 @@ import { useNavigate } from "react-router-dom";
 const RestaurantDetail = () => {
   const [menu, setMenu] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [restaurantId, setRestaurantId] = useState(null);
   const navigate = useNavigate();
+  const [newMenu, setNewMenu] = useState({
+    title: "",
+    description: "",
+  });
+  
   // ... other states ...
+
+  useEffect(() => {
+    fetchOwnerRestaurantDetails(); // Fetch owner restaurant details including ID
+  }, []);
 
   useEffect(() => {
     fetchOwnerMenu();
   }, []);
+
+  const fetchOwnerRestaurantDetails = async () => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`http://localhost:8000/api/owner-restaurants`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data.length > 0) {
+        setRestaurantId(data[0].id); // Assuming the owner has only one restaurant
+        fetchOwnerMenu(data[0].id);   // Fetch the menu of the first restaurant
+      } else {
+        console.error("No restaurants found for the owner");
+      }
+    } else {
+      console.error("Failed to fetch owner's restaurant details");
+    }
+  };
 
   const [newDish, setNewDish] = useState({
     name: "",
@@ -63,6 +94,38 @@ const RestaurantDetail = () => {
     setLoading(false);
   };
 
+  const handleCreateMenu = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+  
+    try {
+      const response = await fetch(`http://localhost:8000/api/menus`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ ...newMenu, restaurant_id: restaurantId  }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setMenu(data.menu);
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to create menu:", errorData);
+      }
+    } catch (error) {
+      console.error("Error creating menu:", error);
+    }
+  };
+  
+  const handleMenuInputChange = (event) => {
+    const { name, value } = event.target;
+    setNewMenu({ ...newMenu, [name]: value });
+  };
+  
+
   const handleEditDish = async (dishId) => {
     // Navigate to edit dish form with dishId
     // Assuming you're using React Router
@@ -104,9 +167,55 @@ const RestaurantDetail = () => {
     return <div>Loading...</div>;
   }
 
-  if (!menu) {
-    return <div>No Menu Found</div>;
-  }
+  // Rest of your component...
+
+if (!menu) {
+  return (
+    <div className="container min-h-screen mx-auto mt-20 p-6">
+      <h2 className="text-2xl font-inter text-text">Create Menu</h2>
+      <form onSubmit={handleCreateMenu} className="space-y-6">
+        <div className="form-group">
+          <label htmlFor="title" className="block text-lg font-inter text-text2">
+            Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            value={newMenu.title}
+            onChange={handleMenuInputChange}
+            placeholder="Enter menu title"
+            className="form-input mt-2 block w-full rounded-md border border-gray-300 shadow-sm p-3 focus:ring focus:ring-primary focus:ring-opacity-50"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description" className="block text-lg font-inter text-text2">
+            Description
+          </label>
+          <textarea
+            name="description"
+            id="description"
+            value={newMenu.description}
+            onChange={handleMenuInputChange}
+            placeholder="Describe the menu"
+            className="form-textarea mt-2 block w-full rounded-md border border-gray-300 shadow-sm p-3 focus:ring focus:ring-primary focus:ring-opacity-50"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-primary hover:bg-orange-500 text-white font-inter py-3 px-6 rounded-lg shadow hover:shadow-lg transition-all duration-300 ease-in-out"
+        >
+          Create Menu
+        </button>
+      </form>
+    </div>
+  );
+}
+
+// Rest of the existing component...
+
 
   return (
     <div className="container min-h-screen mx-auto mt-20 p-6">
