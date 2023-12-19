@@ -3,55 +3,47 @@ import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 
 const CartCheckout = () => {
-    const [user, setUser] = useState({
-      name: "",
-      email: "",
-      birthday: "1990-01-01",
-    });
-    const navigate = useNavigate();
-
-    useEffect(() => {
-      const fetchData = async () => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          navigate("/login"); // Redirect to login if no token is found
-          return;
-        }
-
-        try {
-          const response = await fetch(
-            `http://localhost:8000/api/user/profile`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log(data.name);
-            setUser({
-              ...user,
-              name: data.name,
-              email: data.email,
-
-              // birthday: data.birthday if you have it from the response
-            });
-          } else {
-            console.error("Failed to fetch user data:", response.statusText);
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      };
-
-      fetchData();
-    }, [navigate]);
-  const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState({
+    location: "00-00-0000",
+  });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/"); // Redirect to login if no token is found
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8000/api/user/profile`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.name);
+          setUser({
+            ...user,
+            location: data.location,
+          });
+        } else {
+          console.error("Failed to fetch user data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, [navigate]);
+
+  const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
     // Load cart items from local storage
     const loadedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -125,12 +117,15 @@ const CartCheckout = () => {
             ))}
           </div>
           <div className="mt-6 text-center">
+            <h2 className="text-xl font-bold text-text">Deliver to :</h2>
+            {user.location}
+          </div>
+          <hr className="mt-6" />
+          <div className="mt-6 text-center">
             <h2 className="text-xl font-bold text-text">
               Subtotal: ${calculateSubtotal()}
             </h2>
-            <div className="text-xl text-left font-edu-tas">
-              {user.location}
-            </div>
+
             <button
               className="bg-primary hover:bg-orange-500 text-white font-bold py-2 px-4 m-3 rounded transition duration-300 ease-in-out"
               onClick={handleConfirmOrder}
