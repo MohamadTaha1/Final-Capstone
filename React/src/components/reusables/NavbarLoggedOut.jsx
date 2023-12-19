@@ -8,7 +8,7 @@ const NavbarLoggedOut = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate("/login"); // Redirect to login page after logout
+    navigate("/"); // Redirect to login page after logout
   };
 
   return (
