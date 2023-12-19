@@ -44,6 +44,7 @@ const CartCheckout = () => {
   }, [navigate]);
 
   const [cartItems, setCartItems] = useState([]);
+
   useEffect(() => {
     // Load cart items from local storage
     const loadedCartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -56,6 +57,7 @@ const CartCheckout = () => {
       0
     );
   };
+  const isCartEmpty = cartItems.length === 0;
 
   const handleConfirmOrder = async () => {
     const token = localStorage.getItem("token");
@@ -72,7 +74,6 @@ const CartCheckout = () => {
         quantity: item.quantity,
         price: item.price,
       })),
-      notes: "Any additional notes here",
     };
 
     try {
@@ -110,14 +111,18 @@ const CartCheckout = () => {
           <h2 className="text-3xl font-inter mb-6 text-text2 text-center">
             My Cart
           </h2>
-
           <div className="flex flex-col gap-4">
             {cartItems.map((item) => (
               <CartItem key={item.id} item={item} />
             ))}
+            {isCartEmpty && (
+              <div className="text-center text-lg font-edu-tas text-red-500">
+                Your cart is empty and cannot place orders.
+              </div>
+            )}
           </div>
-          <div className="mt-6 text-center">
-            <h2 className="text-xl font-bold text-text">Deliver to :</h2>
+          <div className="mt-6 text-center text-xl font-bold text-text">
+            <h2>Deliver to :</h2>
             {user.location}
           </div>
           <hr className="mt-6" />
