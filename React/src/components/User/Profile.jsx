@@ -79,25 +79,17 @@ const Profile = () => {
                 {user.birthday}
               </div>
             </div>
+            <br/>
+            <div>
+              <div className="text-xl text-primary font-edu-tas text-left">
+                Location
+              </div>
+              <div className="text-xl text-left font-edu-tas">
+                {user.location}
+              </div>
+            </div>
           </div>
           <br></br>
-          <hr className="mb-10"></hr>
-          <div className="text-center text-3xl font-edu-tas text-text font-semibold">
-            Application
-          </div>
-          <br></br>
-          <div className="text-left font-edu-tas text-text text-xl">
-            Ready to start cooking? We will need some information about your
-            home restaurant first.
-          </div>
-          <div className="text-center mt-6">
-            <a
-              href="/apply"
-              className="text-xl px-4 py-2 border border-transparent font-medium rounded-md text-white bg-primary hover:bg-opacity-75 mt-20 "
-            >
-              Apply
-            </a>
-          </div>
         </div>
       </div>
     </div>
