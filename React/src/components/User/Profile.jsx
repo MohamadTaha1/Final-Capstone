@@ -6,6 +6,7 @@ const Profile = () => {
     name: "",
     email: "",
     birthday: "1990-01-01",
+    location: "00-00-0000",
   });
   const navigate = useNavigate();
 
@@ -13,7 +14,7 @@ const Profile = () => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/login"); // Redirect to login if no token is found
+        navigate("/"); // Redirect to login if no token is found
         return;
       }
 
@@ -33,6 +34,7 @@ const Profile = () => {
             ...user,
             name: data.name,
             email: data.email,
+            location: data.location,
 
             // birthday: data.birthday if you have it from the response
           });
@@ -79,7 +81,7 @@ const Profile = () => {
                 {user.birthday}
               </div>
             </div>
-            <br/>
+            <br />
             <div>
               <div className="text-xl text-primary font-edu-tas text-left">
                 Location

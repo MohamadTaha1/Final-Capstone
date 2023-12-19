@@ -6,7 +6,6 @@ const SignUpForm = () => {
   const [name, setUsername] = useState(""); // Changed from username to name
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
-
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState(""); // Added password confirmation
 
