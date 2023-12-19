@@ -74,10 +74,7 @@ const RestaurantGrid = () => {
           </div>
         ))}
       </div>
-      <div className=" font-inter font-semibold text-2xl p-6 whitespace-nowrap text-primary group transition duration-300 inline-block">
-        Customer Feedback
-        <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-gray-500"></span>
-      </div>
+      
     </div>
   );
 };
