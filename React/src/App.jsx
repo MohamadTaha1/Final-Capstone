@@ -12,13 +12,13 @@ import OrderPage from "./features/delivery/OrdersPage";
 import LandingPage from "./features/Landing/LandingPage";
 import PlansPage from "./features/plans/PlansPage";
 import SubscribePage from "./features/plans/SubscribePage";
-import ApplyPage from "./features/User/ApplyPage";
 import DeliveryDashboard from "./features/DeliveryGuy/DeliveryDashboard";
 import EditResto from "../src/features/adminChef/EditResto";
 import AddDish from "./features/adminChef/AddDish";
 import DisplayDailySpecials from "./features/dailySpecials/DailySpecialsPage";
 import MenuPage from "./features/adminChef/MenuPage";
 import EditDishPage from "./features/dailySpecials/EditDishPage";
+import FeedbackPage from "./features/User/FeedbackPage";
 function App() {
   return (
     <BrowserRouter>
@@ -59,14 +59,6 @@ function App() {
           element={
             <ProtectedRoute role="Customer">
               <OrderPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/apply"
-          element={
-            <ProtectedRoute role="Customer">
-              <ApplyPage />
             </ProtectedRoute>
           }
         />
@@ -118,6 +110,14 @@ function App() {
           element={
             <ProtectedRoute role="Customer">
               <RestaurantDisplay />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute role="Customer">
+              <FeedbackPage />
             </ProtectedRoute>
           }
         />

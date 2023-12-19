@@ -1,76 +1,94 @@
 import { useState, useEffect } from "react";
 
+const getStatusColor = (status) => {
+  switch (status) {
+    case "pending":
+      return "text-yellow-500";
+    case "Approved, preparing":
+      return "text-green-500";
+    default:
+      return "text-gray-500";
+  }
+};
+
+const getStatusBackground = (status) => {
+  switch (status) {
+    case "pending":
+      return "bg-yellow-100";
+    case "Approved, preparing":
+      return "bg-green-100";
+    default:
+      return "bg-gray-100";
+  }
+};
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchOrders();
-  }, []);
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "pending":
-        return "text-yellow-500";
-      case "Approved, preparing":
-        return "text-green-500";
-      default:
-        return "text-gray-500";
-    }
-  };
-
-  const getStatusBackground = (status) => {
-    switch (status) {
-      case "pending":
-        return "bg-yellow-100";
-      case "Approved, preparing":
-        return "bg-green-100";
-      default:
-        return "bg-gray-100";
-    }
-  };
+  }, []); // fetchOrders is missing in dependency array
 
   const fetchOrders = async () => {
-    const response = await fetch(
-      "http://localhost:8000/api/restaurant/orders",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No authentication token found");
+      return;
+    }
 
-    if (response.ok) {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/restaurant/orders",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch orders");
+      }
+
       const data = await response.json();
-      console.log(data);
       setOrders(data.reverse());
-    } else {
-      console.error("Failed to fetch orders");
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   const confirmOrder = async (orderId) => {
-    const response = await fetch(
-      `http://localhost:8000/api/restaurant/orders/${orderId}/confirm`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No authentication token found");
+      return;
+    }
 
-    if (response.ok) {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/restaurant/orders/${orderId}/confirm`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update order status");
+      }
+
       const updatedOrder = await response.json();
-      setOrders(
-        orders.map((order) =>
+      setOrders((currentOrders) =>
+        currentOrders.map((order) =>
           order.id === updatedOrder.order.id ? updatedOrder.order : order
         )
       );
-    } else {
-      console.error("Failed to update order status");
+    } catch (error) {
+      console.error(error.message);
     }
   };
 

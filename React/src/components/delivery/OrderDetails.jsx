@@ -55,6 +55,11 @@ const OrderDetails = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleDeliveredClick = (orderId) => {
+    console.log("Delivered button clicked for order", orderId);
+    
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -80,14 +85,14 @@ const OrderDetails = () => {
               </p>
             )}
             <div className="mt-4">
-              <h3 className="text-xl font-semiinter mb-2 text-text2">
+              <h3 className="text-xl font-inter mb-2 text-text2">
                 Order Details:
               </h3>
               <ul className="list-disc pl-5">
                 {order.order_details.map((detail) => (
                   <li key={detail.id} className="text-text2 mb-2">
                     {dishes[detail.dish_id] ? (
-                      <span className="font-semiinter">
+                      <span className="font-inter">
                         {dishes[detail.dish_id].name} - Quantity:{" "}
                         {detail.quantity} - Price: ${detail.price}
                       </span>
@@ -98,6 +103,15 @@ const OrderDetails = () => {
                 ))}
               </ul>
             </div>
+            {order.status === "Delivered" && (
+              
+              <button
+                onClick={() => handleDeliveredClick(order.id)}
+                className="bg-primary hover:bg-orange-500 text-white font-inter py-2 px-4 my-2 rounded"
+              >
+                Provide feedback !
+              </button>
+            )}
           </div>
         ))
       ) : (
