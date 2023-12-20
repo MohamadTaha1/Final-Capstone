@@ -5,7 +5,6 @@ const Profile = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    birthday: "1990-01-01",
     location: "00-00-0000",
   });
   const navigate = useNavigate();
@@ -73,15 +72,6 @@ const Profile = () => {
               </div>
               <div className="text-xl text-left font-edu-tas">{user.email}</div>
             </div>
-            <div>
-              <div className="text-xl text-primary font-edu-tas text-left">
-                Date of birth
-              </div>
-              <div className="text-xl text-left font-edu-tas">
-                {user.birthday}
-              </div>
-            </div>
-            <br />
             <div>
               <div className="text-xl text-primary font-edu-tas text-left">
                 Location
