@@ -93,8 +93,6 @@
           />
           <h1 className="text-5xl font-inter text-center my-4 text-text">
             {" "}
-            {restaurant.id}
-            {" : "}
             {restaurant.name}
           </h1>
         </div>
