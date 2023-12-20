@@ -15,7 +15,6 @@ const RestaurantDisplay = () => {
   return (
     <>
       {isLoggedIn ? <Navbar /> : <NavbarLoggedOut />}
-
       <RestaurantDetails />
       <Footer />
     </>
