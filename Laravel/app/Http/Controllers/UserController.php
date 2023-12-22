@@ -14,5 +14,25 @@ class UserController extends Controller
         $user = Auth::user();
         return response()->json($user);
     }
-    
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        // Validation
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'location' => 'required|string|max:255',
+        ]);
+
+        // Update user's information
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'location' => $request->location,
+        ]);
+
+        return response()->json(['message' => 'Profile updated successfully.', 'user' => $user]);
+    }
 }
