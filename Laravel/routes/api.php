@@ -32,7 +32,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('/user/profile', [UserController::class, 'profile']);
+// routes/api.php
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user/profile', [UserController::class, 'profile']);
+    Route::put('/user/update-profile', [UserController::class, 'updateProfile']);
+});
+
 
 // Authentication Routes
 Route::post('/login', [AuthController::class, 'login']);

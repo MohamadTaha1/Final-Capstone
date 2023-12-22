@@ -5,8 +5,9 @@ const Profile = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    location: "00-00-0000",
+    location: "",
   });
+  const [editMode, setEditMode] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,6 +49,40 @@ const Profile = () => {
     fetchData();
   }, [navigate]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/user/update-profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (response.ok) {
+        setEditMode(false);
+        // Additional actions after successful update (e.g., show notification)
+      } else {
+        console.error("Failed to update profile:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   return (
     <div className="flex bg-neutral-100 mt-16">
       <div className="mx-auto max-w-lg w-full">
@@ -58,30 +93,78 @@ const Profile = () => {
             Profile
           </h3>
           <br></br>
-          {/* Container for username title and username */}
+
+          {/* Profile Information Display */}
           <div className="flex flex-col">
             <div>
               <div className="text-xl text-primary text-left font-edu-tas">
                 Username
               </div>
-              <div className="text-xl text-left font-edu-tas">{user.name}</div>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="name"
+                  value={user.name}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded p-2 text-xl w-full"
+                />
+              ) : (
+                <div className="text-xl text-left font-edu-tas">{user.name}</div>
+              )}
             </div>
+
             <div className="my-8">
               <div className="text-xl text-primary text-left font-edu-tas">
                 Email
               </div>
-              <div className="text-xl text-left font-edu-tas">{user.email}</div>
+              {editMode ? (
+                <input
+                  type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded p-2 text-xl w-full"
+                />
+              ) : (
+                <div className="text-xl text-left font-edu-tas">{user.email}</div>
+              )}
             </div>
+
             <div>
               <div className="text-xl text-primary font-edu-tas text-left">
                 Location
               </div>
-              <div className="text-xl text-left font-edu-tas">
-                {user.location}
-              </div>
+              {editMode ? (
+                <input
+                  type="text"
+                  name="location"
+                  value={user.location}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded p-2 text-xl w-full"
+                />
+              ) : (
+                <div className="text-xl text-left font-edu-tas">{user.location}</div>
+              )}
             </div>
           </div>
           <br></br>
+
+          {/* Edit and Save Button */}
+          {editMode ? (
+            <button
+              onClick={handleSave}
+              className="bg-primary text-white font-edu-tas py-2 px-4 rounded-lg mt-4"
+            >
+              Save Changes
+            </button>
+          ) : (
+            <button
+              onClick={() => setEditMode(true)}
+              className="bg-primary text-white font-edu-tas py-2 px-4 rounded-lg mt-4"
+            >
+              Edit Profile
+            </button>
+          )}
         </div>
       </div>
     </div>
