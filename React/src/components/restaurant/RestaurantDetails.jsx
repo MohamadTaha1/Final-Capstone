@@ -101,8 +101,8 @@
           {restaurant.description}
         </p>
         <p className="text-xl text-center font-inter font-semibold my-2 text-text">
-          {" Restaurant ID: "}
-          {restaurant.id}
+          {" Restaurant Subscription Delivery Time: "}
+          {restaurant.time}
         </p>
         {/* Daily Specials Section */}
         <div className="mt-6">

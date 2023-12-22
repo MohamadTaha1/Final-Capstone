@@ -9,6 +9,7 @@ const EditRestaurant = () => {
     phone_number: "",
     email: "",
     image: "",
+    time: "",
   });
   const { id } = useParams();
   const navigate = useNavigate();
@@ -136,6 +137,23 @@ const EditRestaurant = () => {
               value={restaurant.phone_number}
               onChange={handleInputChange}
               placeholder="Phone Number"
+              className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              required
+            />
+          </div>
+
+          {/* delivery time field */}
+          <div>
+            <label htmlFor="phone_number" className="text-gray-700">
+              Subscribers Delivery time
+            </label>
+            <input
+              id="time"
+              type="text"
+              name="time"
+              value={restaurant.time}
+              onChange={handleInputChange}
+              placeholder="Time"
               className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               required
             />

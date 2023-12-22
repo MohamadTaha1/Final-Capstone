@@ -63,14 +63,17 @@ const Profile = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/user/update-profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/user/update-profile`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(user),
+        }
+      );
 
       if (response.ok) {
         setEditMode(false);
@@ -109,7 +112,9 @@ const Profile = () => {
                   className="border border-gray-300 rounded p-2 text-xl w-full"
                 />
               ) : (
-                <div className="text-xl text-left font-edu-tas">{user.name}</div>
+                <div className="text-xl text-left font-edu-tas">
+                  {user.name}
+                </div>
               )}
             </div>
 
@@ -126,7 +131,9 @@ const Profile = () => {
                   className="border border-gray-300 rounded p-2 text-xl w-full"
                 />
               ) : (
-                <div className="text-xl text-left font-edu-tas">{user.email}</div>
+                <div className="text-xl text-left font-edu-tas">
+                  {user.email}
+                </div>
               )}
             </div>
 
@@ -143,7 +150,9 @@ const Profile = () => {
                   className="border border-gray-300 rounded p-2 text-xl w-full"
                 />
               ) : (
-                <div className="text-xl text-left font-edu-tas">{user.location}</div>
+                <div className="text-xl text-left font-edu-tas">
+                  {user.location}
+                </div>
               )}
             </div>
           </div>
@@ -158,12 +167,14 @@ const Profile = () => {
               Save Changes
             </button>
           ) : (
-            <button
-              onClick={() => setEditMode(true)}
-              className="bg-primary text-white font-edu-tas py-2 px-4 rounded-lg mt-4"
-            >
-              Edit Profile
-            </button>
+            <div className="text-center">
+              <button
+                onClick={() => setEditMode(true)}
+                className="bg-primary text-white font-edu-tas py-2 px-4 rounded-lg mt-4"
+              >
+                Edit Profile
+              </button>
+            </div>
           )}
         </div>
       </div>

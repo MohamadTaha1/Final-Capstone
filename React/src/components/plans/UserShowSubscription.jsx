@@ -60,10 +60,13 @@ const UserShowSubscription = () => {
     <div className="flex bg-neutral-100">
       <div className="mx-auto max-w-lg w-full">
         {subscriptions.length === 0 ? (
-        <div className="bg-white py-6 px-8 m-2 mb-4 rounded-xl shadow-lg shadow-zinc-300">
-          <p className="text-left text-xl font-inter text-text2"> You have no subscriptions yet!</p>
-        </div>
-      ) : null}
+          <div className="bg-white py-6 px-8 m-2 mb-4 rounded-xl shadow-lg shadow-zinc-300">
+            <p className="text-left text-xl font-inter text-text2">
+              {" "}
+              You have no subscriptions yet!
+            </p>
+          </div>
+        ) : null}
         {subscriptions.map((sub, index) => (
           <div
             key={index}
@@ -75,6 +78,9 @@ const UserShowSubscription = () => {
             <div className="mb-6">
               <p className="text-gray-700">
                 <strong>Restaurant:</strong> {sub.restaurant.name}
+              </p>
+              <p className="text-gray-700">
+                <strong>Delivery Time:</strong> {sub.restaurant.time}
               </p>
               <p className="text-gray-700">
                 <strong>Plan Type:</strong> {sub.subscription_type}
