@@ -17,13 +17,11 @@ const UserShowSubscription = () => {
 
         const headers = { Authorization: `Bearer ${token}` };
 
-        // Fetch user's subscriptions
         const subResponse = await axios.get(
           "http://localhost:8000/api/user/subscription-details",
           { headers }
         );
 
-        // Parallel fetch for restaurant details and daily specials
         const subscriptionDetails = await Promise.all(
           subResponse.data.map(async (subscription) => {
             const restaurantResponse = await axios.get(
@@ -47,7 +45,6 @@ const UserShowSubscription = () => {
         setSubscriptions(subscriptionDetails);
       } catch (error) {
         console.error("Error fetching subscription details:", error);
-        setError(error.message || "Failed to fetch subscription details");
       } finally {
         setIsLoading(false);
       }
@@ -55,14 +52,23 @@ const UserShowSubscription = () => {
 
     fetchData();
   }, []);
+
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="flex min-h-screen bg-neutral-100">
+    <div className="flex bg-neutral-100">
       <div className="mx-auto max-w-lg w-full">
+        {subscriptions.length === 0 ? (
+        <div className="bg-white py-6 px-8 m-2 mb-4 rounded-xl shadow-lg shadow-zinc-300">
+          <p className="text-left text-xl font-inter text-text2"> You have no subscriptions yet!</p>
+        </div>
+      ) : null}
         {subscriptions.map((sub, index) => (
-          <div key={index} className="bg-white py-6 px-8 m-2 mb-4 rounded-xl shadow-lg shadow-zinc-300">
+          <div
+            key={index}
+            className="bg-white py-6 px-8 m-2 mb-4 rounded-xl shadow-lg shadow-zinc-300"
+          >
             <h3 className="text-left text-3xl font-edu-tas text-text ">
               Subscription Details
             </h3>
@@ -74,15 +80,17 @@ const UserShowSubscription = () => {
                 <strong>Plan Type:</strong> {sub.subscription_type}
               </p>
               <p className="text-gray-700">
-                <strong>Start Date:</strong> 
+                <strong>Start Date:</strong>
                 {new Date(sub.start_date).toLocaleDateString()}
               </p>
               <p className="text-gray-700">
-                <strong>End Date:</strong> 
+                <strong>End Date:</strong>
                 {new Date(sub.end_date).toLocaleDateString()}
               </p>
             </div>
-            <h2 className="text-xl font-inter mb-4 text-text2">Weekly Specials</h2>
+            <h2 className="text-xl font-inter mb-4 text-text2">
+              Weekly Specials
+            </h2>
             <div className="overflow-x-auto">
               <table className="min-w-full table-auto text-gray-700">
                 <thead>
@@ -120,13 +128,20 @@ const UserShowSubscription = () => {
       </div>
     </div>
   );
-  
 };
 
 // Helper function to convert day of week index to string
 const dayOfWeek = (index) => {
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    return days[index] || "Unknown";
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  return days[index] || "Unknown";
 };
 
 // Helper function to safely format price
