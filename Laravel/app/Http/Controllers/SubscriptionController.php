@@ -11,30 +11,46 @@ use App\Models\Restaurant;
 class SubscriptionController extends Controller
 {
     public function subscribe(Request $request)
-    {
-        Log::info('Subscribe request received', ['request' => $request->all()]);
+{
+    Log::info('Subscribe request received', ['request' => $request->all()]);
 
-        $validatedData = $request->validate([
-            'restaurantId' => 'required|exists:restaurants,id',
-            'planType' => 'required|string',
+    $validatedData = $request->validate([
+        'restaurantId' => 'required|exists:restaurants,id',
+        'planType' => 'required|string',
+    ]);
+
+    $userId = Auth::id();
+    $startDate = Carbon::now();
+    $endDate = $this->calculateEndDate($validatedData['planType'], $startDate);
+
+    // Check if the user is already subscribed to the restaurant
+    $existingSubscription = Subscription::where('user_id', $userId)
+                                        ->where('restaurant_id', $validatedData['restaurantId'])
+                                        ->first();
+
+    if ($existingSubscription) {
+        // Update the existing subscription
+        $existingSubscription->update([
+            'subscription_type' => $validatedData['planType'],
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ]);
-
-        $startDate = Carbon::now();
-        $endDate = $this->calculateEndDate($validatedData['planType'], $startDate);
-
+        Log::info('Subscription updated', ['subscription' => $existingSubscription]);
+        return response()->json($existingSubscription, 200);
+    } else {
+        // Create a new subscription
         $subscription = Subscription::create([
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'restaurant_id' => $validatedData['restaurantId'],
             'subscription_type' => $validatedData['planType'],
             'start_date' => $startDate,
             'end_date' => $endDate,
             // other fields as needed
         ]);
-
         Log::info('Subscription created', ['subscription' => $subscription]);
-
         return response()->json($subscription, 201);
     }
+}
 
     private function calculateEndDate($planType, $startDate)
     {
@@ -49,19 +65,19 @@ class SubscriptionController extends Controller
     }
 
     public function getUserSubscriptionDetails()
-    {
-        $userId = Auth::id(); // Get the logged-in user's ID
-        $subscription = Subscription::with('restaurant')
-                                    ->where('user_id', $userId)
-                                    ->latest()
-                                    ->first();
+{
+    $userId = Auth::id(); // Get the logged-in user's ID
+    $subscriptions = Subscription::with('restaurant')
+                                 ->where('user_id', $userId)
+                                 ->get();
 
-        if (!$subscription) {
-            return response()->json(['message' => 'No subscription found'], 404);
-        }
-
-        return response()->json($subscription);
+    if ($subscriptions->isEmpty()) {
+        return response()->json(['message' => 'No subscriptions found'], 404);
     }
+
+    return response()->json($subscriptions);
+}
+
 
 public function getActiveSubscriptionsForOwner()
     {
