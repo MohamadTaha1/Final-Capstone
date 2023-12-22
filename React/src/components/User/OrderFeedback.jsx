@@ -6,23 +6,23 @@ const OrderFeedback = () => {
   const [loading, setLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
-  const { orderId } = useParams();  
+  const { orderId } = useParams();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/"); // Redirect to login if no token is found
-        return;
-      }
+    if (!token) {
+      navigate("/"); // Redirect to login if no token is found
+      return;
+    }
 
-      setLoading(true); // Start loading
+    setLoading(true); // Start loading
 
     // Simulate delay and show success message
     setTimeout(() => {
       setLoading(false);
       setShowSuccessModal(true);
-    }, 8000);
+    }, 10000);
 
     const endpoint = "http://localhost:8000/api/submitReview";
 
@@ -33,16 +33,18 @@ const OrderFeedback = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ review_text: description, order_id: orderId }), 
+        body: JSON.stringify({ review_text: description, order_id: orderId }),
       });
       console.log("Sending POST request to:", endpoint);
-      console.log("Request payload:", JSON.stringify({ review_text: description, order_id: orderId }));
+      console.log(
+        "Request payload:",
+        JSON.stringify({ review_text: description, order_id: orderId })
+      );
 
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Error response text:", errorText);
       }
-      
     } catch (error) {
       console.error("Error submitting description:", error);
     }
@@ -53,15 +55,16 @@ const OrderFeedback = () => {
     navigate("/home");
   };
 
-
-   return (
+  return (
     <div className="flex bg-neutral-100 mt-16 min-h-screen">
       {/* Loading Screen */}
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg shadow-xl">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-            <p className="text-lg font-semibold mt-4">Submitting your feedback...</p>
+            <p className="text-lg font-semibold mt-4">
+              Submitting your feedback...
+            </p>
           </div>
         </div>
       )}
