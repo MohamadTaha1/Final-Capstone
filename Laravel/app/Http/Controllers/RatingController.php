@@ -47,25 +47,25 @@ class RatingController extends Controller
             $command = escapeshellcmd("python $scriptPath " . escapeshellarg($reviewText));
             $output = shell_exec($command);
             $sentimentResult = json_decode($output, true);
-        $sentimentResult = json_decode($output, true);
+            $sentimentResult = json_decode($output, true);
 
-        // Calculate the star rating based on the sentiment result
-        $starRating = $this->calculateStarRating($sentimentResult);
+            // Calculate the star rating based on the sentiment result
+            $starRating = $this->calculateStarRating($sentimentResult);
 
-        // Return the star rating
-        $rating = Rating::create([
-            'restaurant_id' => $restaurantId,
-            'user_id' => $userId,
-            'text' => $validatedData['review_text'],
-            'rating' => $this->calculateStarRating($sentimentResult)
-        ]);
-        $restaurantRating = RestaurantRating::updateOrCreate(
-            ['restaurant_id' => $restaurantId],
-            ['number_of_ratings' => DB::raw('number_of_ratings + 1'), 'total_rating' => DB::raw('total_rating + ' . $starRating)]
-        );
+            // Return the star rating
+            $rating = Rating::create([
+                'restaurant_id' => $restaurantId,
+                'user_id' => $userId,
+                'text' => $validatedData['review_text'],
+                'rating' => $this->calculateStarRating($sentimentResult)
+            ]);
+            $restaurantRating = RestaurantRating::updateOrCreate(
+                ['restaurant_id' => $restaurantId],
+                ['number_of_ratings' => DB::raw('number_of_ratings + 1'), 'total_rating' => DB::raw('total_rating + ' . $starRating)]
+            );
 
-            \Log::info('Review submitted successfully');
-            return response()->json(['message' => 'Review submitted successfully']);
+                \Log::info('Review submitted successfully');
+                return response()->json(['message' => 'Review submitted successfully']);
         } catch (\Exception $e) {
             \Log::error('Error in submitReview: ' . $e->getMessage());
             return response()->json(['error' => 'An error occurred'], 500);
