@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         // Schedule your custom command
-        $schedule->command('app:assign-delivery-orders')->everyMinute();
+        $schedule->command('app:assign-delivery-orders')->everyFiveSeconds();
     }
 
     /**
@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
