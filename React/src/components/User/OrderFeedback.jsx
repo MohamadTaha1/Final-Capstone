@@ -59,12 +59,14 @@ const OrderFeedback = () => {
     <div className="flex bg-neutral-100 mt-16 min-h-screen">
       {/* Loading Screen */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10 text-center">
           <div className="bg-white p-5 rounded-lg shadow-xl">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-            <p className="text-lg font-semibold mt-4">
-              Submitting your feedback...
-            </p>
+            <div className="flex flex-col justify-center items-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+              <p className="text-lg font-semibold mt-4">
+                Submitting your feedback...
+              </p>
+            </div>
           </div>
         </div>
       )}
