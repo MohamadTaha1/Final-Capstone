@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const getStatusColor = (status) => {
   switch (status) {
@@ -24,6 +25,7 @@ const getStatusBackground = (status) => {
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOrders();
@@ -87,6 +89,9 @@ const Orders = () => {
           order.id === updatedOrder.order.id ? updatedOrder.order : order
         )
       );
+
+      // Navigate to /owner route upon success
+      navigate("/owner");
     } catch (error) {
       console.error(error.message);
     }
