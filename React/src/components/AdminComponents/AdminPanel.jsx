@@ -11,12 +11,13 @@ const AdminPanel = () => {
     phone_number: "",
     email: "",
     image: "",
+    time: "",
   });
 
   const handleCreateRestaurant = async (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
-  
+
     try {
       const response = await fetch(`http://localhost:8000/api/restaurants`, {
         method: "POST",
@@ -26,7 +27,7 @@ const AdminPanel = () => {
         },
         body: JSON.stringify(newRestaurant),
       });
-  
+
       if (response.ok) {
         fetchOwnerRestaurants();
       } else {
@@ -37,12 +38,11 @@ const AdminPanel = () => {
       console.error("Error creating restaurant:", error);
     }
   };
-  
+
   const handleRestaurantInputChange = (event) => {
     const { name, value } = event.target;
     setNewRestaurant({ ...newRestaurant, [name]: value });
   };
-  
 
   const fetchOwnerRestaurants = async () => {
     const token = localStorage.getItem("token");
@@ -93,12 +93,21 @@ const AdminPanel = () => {
   if (restaurants.length === 0) {
     return (
       <div className="container mx-auto mt-20 p-4">
-        <h2 className="text-3xl font-bold text-center text-primary mb-6">Create Your Restaurant</h2>
-        <form onSubmit={handleCreateRestaurant} className="bg-white shadow-lg rounded-lg p-8 space-y-6">
-          
+        <h2 className="text-3xl font-bold text-center text-primary mb-6">
+          Create Your Restaurant
+        </h2>
+        <form
+          onSubmit={handleCreateRestaurant}
+          className="bg-white shadow-lg rounded-lg p-8 space-y-6"
+        >
           {/* Name Field */}
           <div>
-            <label htmlFor="name" className="block text-lg font-medium text-gray-700">Name</label>
+            <label
+              htmlFor="name"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Name
+            </label>
             <input
               type="text"
               id="name"
@@ -109,10 +118,15 @@ const AdminPanel = () => {
               required
             />
           </div>
-  
+
           {/* Description Field */}
           <div>
-            <label htmlFor="description" className="block text-lg font-medium text-gray-700">Description</label>
+            <label
+              htmlFor="description"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Description
+            </label>
             <textarea
               id="description"
               name="description"
@@ -122,10 +136,15 @@ const AdminPanel = () => {
               required
             />
           </div>
-  
+
           {/* Address Field */}
           <div>
-            <label htmlFor="address" className="block text-lg font-medium text-gray-700">Address</label>
+            <label
+              htmlFor="address"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Address
+            </label>
             <input
               type="text"
               id="address"
@@ -136,10 +155,15 @@ const AdminPanel = () => {
               required
             />
           </div>
-  
+
           {/* Phone Number Field */}
           <div>
-            <label htmlFor="phone_number" className="block text-lg font-medium text-gray-700">Phone Number</label>
+            <label
+              htmlFor="phone_number"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Phone Number
+            </label>
             <input
               type="tel"
               id="phone_number"
@@ -150,10 +174,15 @@ const AdminPanel = () => {
               required
             />
           </div>
-  
+
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-lg font-medium text-gray-700">Email</label>
+            <label
+              htmlFor="email"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -164,10 +193,33 @@ const AdminPanel = () => {
               required
             />
           </div>
-  
+          {/* Time Field */}
+          <div>
+            <label
+              htmlFor="time"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Subscription Delivery Time
+            </label>
+            <input
+              type="text"
+              id="time"
+              name="time"
+              value={newRestaurant.time}
+              onChange={handleRestaurantInputChange}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-primary focus:border-primary"
+              required
+            />
+          </div>
+
           {/* Image URL Field */}
           <div>
-            <label htmlFor="image" className="block text-lg font-medium text-gray-700">Image URL</label>
+            <label
+              htmlFor="image"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Image URL
+            </label>
             <input
               type="url"
               id="image"
@@ -178,7 +230,7 @@ const AdminPanel = () => {
               required
             />
           </div>
-  
+
           {/* Submit Button */}
           <button
             type="submit"
@@ -190,8 +242,6 @@ const AdminPanel = () => {
       </div>
     );
   }
-  
-
 
   return (
     <div className="container mx-auto mt-20 p-4">
